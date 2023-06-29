@@ -40,7 +40,7 @@ const player = new Player({
       frameRate: 4,
       frameBuffer: 4,
       loop: true,
-      imageSrc: './img/AssetPack/Light/jump/jumpnRight.png',
+      imageSrc: './img/AssetPack/Light/jump/jumpRight.png',
     },
     jumpLeft: {
       frameRate: 4,
