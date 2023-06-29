@@ -3,6 +3,7 @@ class Sprite {
     position,
     imageSrc,
     frameRate = 1,
+    //background image ^
     animations,
     frameBuffer = 2,
     loop = true,
