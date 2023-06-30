@@ -29,8 +29,16 @@ class Player extends Sprite {
 
   update() {
     // this is the blue box
+
     //  c.fillStyle = 'rgba(0, 0, 255, 0.5)'
     // c.fillRect(this.position.x, this.position.y, this.width, this.height)
+
+    //  c.fillRect(
+    //    this.hitbox.position.x,
+    //    this.hitbox.position.y,
+    //    this.hitbox.width,
+    //    this.hitbox.height
+    //  )
 
     this.position.x += this.velocity.x;
 
@@ -41,18 +49,14 @@ class Player extends Sprite {
 
     this.updateHitbox();
 
-    //  c.fillRect(
-    //    this.hitbox.position.x,
-    //    this.hitbox.position.y,
-    //    this.hitbox.width,
-    //    this.hitbox.height
-    //  )
     this.checkForVerticalCollisions();
 
     this.updateRolling()
   }
+
   updateRolling() {
     if (this.isRolling) {
+      console.log(isRolling)
       // Apply rolling movement with basic physics
       this.position.x += this.rollVelocity;
 
