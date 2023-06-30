@@ -75,13 +75,13 @@ const player = new Player({
     rollRight: {
       frameRate: 20,
       frameBuffer: 2,
-      loop: false,
+      loop: true,
       imageSrc: './img/AssetPack/Light/roll/rollRight.png',
     },
     rollLeft: {
       frameRate: 20,
       frameBuffer: 2,
-      loop: false,
+      loop: true,
       imageSrc: './img/AssetPack/Light/roll/rollLeft.png',
     },
     fallRight: {
@@ -245,7 +245,10 @@ const keys = {
   },
   f: {
     pressed: false,
-  }
+  },
+  r: {
+    pressed: false,
+  },
 }
 
 const overlay = {

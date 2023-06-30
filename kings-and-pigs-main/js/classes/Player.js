@@ -19,10 +19,15 @@ class Player extends Sprite {
     this.collisionBlocks = collisionBlocks;
 
     this.isRolling = false;
-
     this.rollVelocity = 10;
     this.rollAcceleration = 0.2;
     this.rollDeceleration = 0.1;
+
+    this.initialX = this.position.x;
+    this.isDashing = false;
+    this.dashDeceleration = 0.1;
+
+
 
     this.isWallSliding = false;
     this.wallSlideVelocity = 5;
@@ -33,6 +38,9 @@ class Player extends Sprite {
   }
 
   update() {
+    c.fillStyle = 'rgba(0, 0, 255, 0.5)'
+    c.fillRect(this.position.x, this.position.y, this.width, this.height)
+
     this.position.x += this.velocity.x;
 
     this.updateHitbox();
@@ -45,11 +53,21 @@ class Player extends Sprite {
     this.checkForVerticalCollisions();
 
     this.updateRolling();
+
+    this.updateDashing();
+
+    c.fillRect(
+      this.hitbox.position.x,
+      this.hitbox.position.y,
+      this.hitbox.width,
+      this.hitbox.height
+    )
   }
 
 
   handleInput(keys) {
     if (this.isRolling) return;
+    if (this.isDashing) return;
     if (this.preventInput) return;
     this.velocity.x = 0;
   
@@ -63,7 +81,7 @@ class Player extends Sprite {
       this.lastDirection = 'left';
     }
   
-    if (!keys.a.pressed && !keys.d.pressed && !keys.f.pressed) {
+    if (!keys.a.pressed && !keys.d.pressed && !keys.f.pressed && !keys.r.pressed) {
       if (this.lastDirection === 'left') this.switchSprite('idleLeft');
       else this.switchSprite('idleRight');
     }
@@ -86,6 +104,28 @@ class Player extends Sprite {
       if (this.lastDirection === 'left') this.switchSprite('rollLeft');
       if (this.lastDirection === 'right') this.switchSprite('rollRight');
     }
+    
+    if (keys.r.pressed) {
+      this.startDash();
+    }
+  
+    if (keys.r.pressed && keys.d.pressed) {
+      this.switchSprite('dashRight');
+      this.velocity.x = 8;
+      this.lastDirection = 'right';
+    }
+    if (keys.r.pressed && keys.a.pressed) {
+      this.switchSprite('dashLeft');
+      this.velocity.x = -8;
+      this.lastDirection = 'left';
+    }
+    if (keys.r.pressed && !keys.a.pressed && !keys.d.pressed) {
+      this.velocity.x = this.lastDirection === 'left' ? -8 : 8;
+      if (this.lastDirection === 'left') this.switchSprite('dashLeft');
+      if (this.lastDirection === 'right') this.switchSprite('dashRight');
+    }
+
+    
   
     if (keys.w.pressed && this.velocity.y >= 0 && this.body.blocked.right && this.canJumpRight) {
       this.setVelocityY(-200);
@@ -155,6 +195,28 @@ updateRolling() {
     if (Math.abs(this.rollVelocity) < 1) {
       this.isRolling = false;
       this.rollVelocity = this.lastDirection === 'left' ? -10 : 10;
+    }
+  }
+}
+
+startDash() {
+  if (!this.isDashing && !this.isRolling) { // Check if not already dashing or rolling
+    this.isDashing = true;
+    this.dashVelocity = this.lastDirection === 'left' ? -12 : 12;
+    this.dashDuration = 0; // Initialize the dash duration
+    this.maxDashDuration = 15; // Adjust this value according to your needs
+    // Add any additional logic or animations for the dash
+  }
+}
+
+updateDashing() {
+  if (this.isDashing) {
+    if (this.dashDuration < this.maxDashDuration) {
+      this.position.x += this.dashVelocity;
+      this.dashDuration++;
+    } else {
+      this.isDashing = false;
+      this.dashVelocity = 0;
     }
   }
 }
