@@ -9,32 +9,104 @@ let collisionBlocks
 let background
 let doors
 const player = new Player({
-  imageSrc: './img/king/idle.png',
+  imageSrc: './img/AssetPack/Light/idle_blink/idleRight.png',
   frameRate: 11,
   animations: {
     idleRight: {
       frameRate: 11,
-      frameBuffer: 2,
+      frameBuffer: 8,
       loop: true,
-      imageSrc: './img/king/idle.png',
+      imageSrc: './img/AssetPack/Light/idle_blink/idleRight.png',
     },
     idleLeft: {
-      frameRate: 11,
+      frameRate: 8,
       frameBuffer: 2,
       loop: true,
-      imageSrc: './img/king/idleLeft.png',
+      imageSrc: './img/AssetPack/Light/idle_blink/idleLeft.png',
     },
     runRight: {
-      frameRate: 8,
+      frameRate: 10,
       frameBuffer: 4,
       loop: true,
-      imageSrc: './img/king/runRight.png',
+      imageSrc: './img/AssetPack/Light/run/runRight.png',
     },
     runLeft: {
-      frameRate: 8,
+      frameRate: 10,
       frameBuffer: 4,
       loop: true,
-      imageSrc: './img/king/runLeft.png',
+      imageSrc: './img/AssetPack/Light/run/runLeft.png',
+    },
+    jumpRight: {
+      frameRate: 4,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/jump/jumpRight.png',
+    },
+    jumpLeft: {
+      frameRate: 4,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/jump/jumpLeft.png',
+    },
+    wallSlideRight: {
+      frameRate: 4,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/wall_slide/wallSlideRight.png',
+    },
+    wallSlideLeft: {
+      frameRate: 4,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/wall_slide/wallSlideLeft.png',
+    },
+    wallGrabRight: {
+      frameRate: 13,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/wall_grab/wallGrabRight.png',
+    },
+    wallGrabLeft: {
+      frameRate: 13,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/wall_grab/wallGrabLeft.png',
+    },
+    rollRight: {
+      frameRate: 20,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/roll/rollRight.png',
+    },
+    rollLeft: {
+      frameRate: 20,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/roll/rollLeft.png',
+    },
+    fallRight: {
+      frameRate: 4,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/fall/fallRight.png',
+    },
+    fallLeft: {
+      frameRate: 4,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/fall/fallLeft.png',
+    },
+    dashRight: {
+      frameRate: 4,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/dash/dashRight.png',
+    },
+    dashLeft: {
+      frameRate: 4,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/dash/dashLeft.png',
     },
     enterDoor: {
       frameRate: 8,
@@ -171,6 +243,12 @@ const keys = {
   d: {
     pressed: false,
   },
+  s: {
+    pressed: false,
+  },
+  Space: {
+    pressed: false,
+  }
 }
 
 const overlay = {

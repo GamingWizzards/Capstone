@@ -45,7 +45,15 @@ class Player extends Sprite {
   handleInput(keys) {
     if (this.preventInput) return
     this.velocity.x = 0
-    if (keys.d.pressed) {
+    if (keys.d.pressed && keys.s.pressed) {
+      this.switchSprite('dashRight');
+      this.velocity.x = 10;
+      this.lastDirection = 'right';
+    } else if (keys.a.pressed && keys.s.pressed) {
+      this.switchSprite('dashLeft');
+      this.velocity.x = -10;
+      this.lastDirection = 'left';
+    } else if (keys.d.pressed) {
       this.switchSprite('runRight')
       this.velocity.x = 5
       this.lastDirection = 'right'
@@ -87,13 +95,13 @@ class Player extends Sprite {
       // if a collision exists
       if (
         this.hitbox.position.x <=
-          collisionBlock.position.x + collisionBlock.width &&
+        collisionBlock.position.x + collisionBlock.width &&
         this.hitbox.position.x + this.hitbox.width >=
-          collisionBlock.position.x &&
+        collisionBlock.position.x &&
         this.hitbox.position.y + this.hitbox.height >=
-          collisionBlock.position.y &&
+        collisionBlock.position.y &&
         this.hitbox.position.y <=
-          collisionBlock.position.y + collisionBlock.height
+        collisionBlock.position.y + collisionBlock.height
       ) {
         // collision on x axis going to the left
         if (this.velocity.x < -0) {
@@ -125,13 +133,13 @@ class Player extends Sprite {
       // if a collision exists
       if (
         this.hitbox.position.x <=
-          collisionBlock.position.x + collisionBlock.width &&
+        collisionBlock.position.x + collisionBlock.width &&
         this.hitbox.position.x + this.hitbox.width >=
-          collisionBlock.position.x &&
+        collisionBlock.position.x &&
         this.hitbox.position.y + this.hitbox.height >=
-          collisionBlock.position.y &&
+        collisionBlock.position.y &&
         this.hitbox.position.y <=
-          collisionBlock.position.y + collisionBlock.height
+        collisionBlock.position.y + collisionBlock.height
       ) {
         if (this.velocity.y < 0) {
           this.velocity.y = 0

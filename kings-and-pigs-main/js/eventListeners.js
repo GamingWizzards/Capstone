@@ -7,7 +7,7 @@ window.addEventListener('keydown', (event) => {
 
         if (
           player.hitbox.position.x + player.hitbox.width <=
-            door.position.x + door.width &&
+          door.position.x + door.width &&
           player.hitbox.position.x >= door.position.x &&
           player.hitbox.position.y + player.hitbox.height >= door.position.y &&
           player.hitbox.position.y <= door.position.y + door.height
@@ -31,6 +31,16 @@ window.addEventListener('keydown', (event) => {
       // move player to the right
       keys.d.pressed = true
       break
+    case 'a' && 's':
+      // Code for dash left
+      keys.s.pressed = true
+
+      break
+    case 'd' && 's':
+      // Code for dash right
+      keys.s.pressed = true
+
+      break
   }
 })
 
@@ -44,6 +54,16 @@ window.addEventListener('keyup', (event) => {
     case 'd':
       // move player to the right
       keys.d.pressed = false
+
+      break
+    case 'a' && 's':
+      // Code for dash left
+      keys.s.pressed = false
+
+      break
+    case 'd' && 's':
+      // Code for dash right
+      keys.s.pressed = false
 
       break
   }
