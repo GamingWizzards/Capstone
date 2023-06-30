@@ -33,15 +33,29 @@ window.addEventListener("keydown", (event) => {
       keys.d.pressed = true;
       break;
 
-      case "f":
-        keys.f.pressed = true;
-        break;
+    case "s":
+      keys.s.pressed = true;
+      break;
+    case "a" && "s":
+      // Code for dash left
+      keys.s.pressed = true;
 
-    case 'a' && 'f':
+      break;
+    case "d" && "s":
+      // Code for dash right
+      keys.s.pressed = true;
+
+      break;
+
+    case "f":
       keys.f.pressed = true;
       break;
-  
-    case "d" && 'f':
+
+    case "a" && "f":
+      keys.f.pressed = true;
+      break;
+
+    case "d" && "f":
       keys.f.pressed = true;
       break;
   }
@@ -59,17 +73,30 @@ window.addEventListener("keyup", (event) => {
       keys.d.pressed = false;
 
       break;
+    case "s":
+      keys.s.pressed = false;
+      break;
+    case "a" && "s":
+      // Code for dash left
+      keys.s.pressed = false;
+
+      break;
+    case "d" && "s":
+      // Code for dash right
+      keys.s.pressed = false;
+
+      break;
 
     case "f":
       keys.f.pressed = false;
       break;
 
-      case "a" && 'f':
-        keys.f.pressed = false;
-        break;
-    
-      case "d" && 'f':
-        keys.f.pressed = false;
-        break;
+    case "a" && "f":
+      keys.f.pressed = false;
+      break;
+
+    case "d" && "f":
+      keys.f.pressed = false;
+      break;
   }
 });

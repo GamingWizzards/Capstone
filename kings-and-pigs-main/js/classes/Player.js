@@ -18,28 +18,21 @@ class Player extends Sprite {
 
     this.collisionBlocks = collisionBlocks;
 
-    this.isRolling = false
+    this.isRolling = false;
 
+    this.rollVelocity = 10;
+    this.rollAcceleration = 0.2;
+    this.rollDeceleration = 0.1;
 
-    this.rollVelocity = 10; // Initial roll velocity
-   this.rollAcceleration = 0.2; // Rolling acceleration
-     this.rollDeceleration = 0.1; // Rolling deceleration
-    // this.isRolling = false; // Flag to indicate if the player is rolling
+    this.isWallSliding = false;
+    this.wallSlideVelocity = 5;
+    this.wallJumpVelocityX = 6;
+    this.wallJumpVelocityY = -15;
+    this.isWallJumping = false;
+    this.isWallGrabbing = false;
   }
 
   update() {
-    // this is the blue box
-
-    //  c.fillStyle = 'rgba(0, 0, 255, 0.5)'
-    // c.fillRect(this.position.x, this.position.y, this.width, this.height)
-
-    //  c.fillRect(
-    //    this.hitbox.position.x,
-    //    this.hitbox.position.y,
-    //    this.hitbox.width,
-    //    this.hitbox.height
-    //  )
-
     this.position.x += this.velocity.x;
 
     this.updateHitbox();
@@ -51,62 +44,123 @@ class Player extends Sprite {
 
     this.checkForVerticalCollisions();
 
-    this.updateRolling()
+    this.updateRolling();
   }
 
-  updateRolling() {
-    if (this.isRolling) {
-      console.log(isRolling)
-      // Apply rolling movement with basic physics
-      this.position.x += this.rollVelocity;
-
-      // Apply deceleration to gradually slow down the rolling velocity
-      this.rollVelocity *= (1 - this.rollDeceleration);
-
-      // Stop rolling if the velocity becomes too slow
-      if (Math.abs(this.rollVelocity) < 1) {
-        this.isRolling = false;
-        this.rollVelocity = 10; // Reset the roll velocity for the next roll
-      }
-    }
-  }
 
   handleInput(keys) {
-    console.log(keys)
-    if (this.isRolling==true) return;
+    if (this.isRolling) return;
     if (this.preventInput) return;
     this.velocity.x = 0;
-    if (keys.d.pressed) {
-      this.switchSprite("runRight");
-      this.velocity.x = 5;
-      this.lastDirection = "right";
-    } else if (keys.a.pressed) {
-      this.switchSprite("runLeft");
-      this.velocity.x = -5;
-      this.lastDirection = "left";
-    } 
-  if(!keys.a.pressed && !keys.d.pressed && !keys.f.pressed){
-      if (this.lastDirection === "left") this.switchSprite("idleLeft");
-      else this.switchSprite("idleRight");
-    }
-
-    if(keys.f.pressed && keys.d.pressed) {
-      this.switchSprite('rollRight')
-      this.velocity.x = + 8 
-      this.lastDirection = 'right' 
-    } 
- if (keys.f.pressed && keys.a.pressed) {
-      this.switchSprite("rollLeft");
-      this.velocity.x = -8;
-      this.lastDirection = "left";
-    }
- if (keys.f.pressed && !keys.a.pressed && !keys.d.pressed) {
-      this.velocity.x = this.lastDirection == 'left' ? -8 : 8;
-      if (this.lastDirection === 'left') this.switchSprite("rollLeft");
-      if (this.lastDirection === 'right') this.switchSprite("rollRight"); 
   
+    if (keys.d.pressed) {
+      this.switchSprite('runRight');
+      this.velocity.x = 5;
+      this.lastDirection = 'right';
+    } else if (keys.a.pressed) {
+      this.switchSprite('runLeft');
+      this.velocity.x = -5;
+      this.lastDirection = 'left';
+    }
+  
+    if (!keys.a.pressed && !keys.d.pressed && !keys.f.pressed) {
+      if (this.lastDirection === 'left') this.switchSprite('idleLeft');
+      else this.switchSprite('idleRight');
+    }
+    if (keys.f.pressed) {
+      this.startRoll();
+    }
+  
+    if (keys.f.pressed && keys.d.pressed) {
+      this.switchSprite('rollRight');
+      this.velocity.x = 8;
+      this.lastDirection = 'right';
+    }
+    if (keys.f.pressed && keys.a.pressed) {
+      this.switchSprite('rollLeft');
+      this.velocity.x = -8;
+      this.lastDirection = 'left';
+    }
+    if (keys.f.pressed && !keys.a.pressed && !keys.d.pressed) {
+      this.velocity.x = this.lastDirection === 'left' ? -8 : 8;
+      if (this.lastDirection === 'left') this.switchSprite('rollLeft');
+      if (this.lastDirection === 'right') this.switchSprite('rollRight');
+    }
+  
+    if (keys.w.pressed && this.velocity.y >= 0 && this.body.blocked.right && this.canJumpRight) {
+      this.setVelocityY(-200);
+      this.setVelocityX(-200);
+      this.canJumpRight = false;
+      setTimeout(() => {
+        this.canJumpRight = true;
+      }, 3000);
+    }
+  
+    if (keys.w.pressed) {
+      if (this.isWallSliding) {
+        this.isWallSliding = false;
+        this.isWallJumping = true;
+        this.velocity.x = this.lastDirection === 'left' ? this.wallJumpVelocityX : -this.wallJumpVelocityX;
+        this.velocity.y = this.wallJumpVelocityY;
+        this.switchSprite('jumpRight');
+      } else {
+        // Perform regular jump when 'w' key is pressed
+        if (!this.isJumping) {
+          this.isJumping = true;
+          this.velocity.y = -10;
+          this.switchSprite('jumpRight');
+        }
+      }
+    }
+  
+    if (!keys.w.pressed) {
+      this.isJumping = false;
+    }
+  
+    if (this.velocity.y > 0) {
+      if (this.isWallSliding) {
+        console.log(this.isWallSliding)
+        if (this.lastDirection === 'left') this.switchSprite('wallSlideLeft');
+        else this.switchSprite('wallSlideRight');
+      } else {
+        if (this.lastDirection === 'left') this.switchSprite('fallLeft');
+        else this.switchSprite('fallRight');
+      }
+    }
+  
+    if (this.velocity.y < 0) {
+      if (this.lastDirection === 'left') this.switchSprite('jumpLeft');
+      else this.switchSprite('jumpRight');
+    }
+  
+    if (this.isWallGrabbing) {
+      console.log(this.isWallGrabbing)
+      if (this.lastDirection === 'left') this.switchSprite('wallGrabLeft');
+      else this.switchSprite('wallGrabRight');
     }
   }
+
+startRoll() {
+  if (!this.isRolling) {
+    this.isRolling = true;
+    this.rollVelocity = this.lastDirection === 'left' ? -10 : 10;
+    // Add any additional logic or animations for the roll
+  }
+}
+updateRolling() {
+  if (this.isRolling) {
+    this.position.x += this.rollVelocity;
+    this.rollVelocity *= 1 - this.rollDeceleration;
+
+    if (Math.abs(this.rollVelocity) < 1) {
+      this.isRolling = false;
+      this.rollVelocity = this.lastDirection === 'left' ? -10 : 10;
+    }
+  }
+}
+  
+  
+
   switchSprite(name) {
     if (this.image === this.animations[name].image) return;
     this.currentFrame = 0;
@@ -128,38 +182,59 @@ class Player extends Sprite {
     };
   }
 
-  checkForHorizontalCollisions() {
-    for (let i = 0; i < this.collisionBlocks.length; i++) {
-      const collisionBlock = this.collisionBlocks[i];
+ checkForHorizontalCollisions() {
+  for (let i = 0; i < this.collisionBlocks.length; i++) {
+    const collisionBlock = this.collisionBlocks[i];
 
-      // if a collision exists
-      if (
-        this.hitbox.position.x <=
-          collisionBlock.position.x + collisionBlock.width &&
-        this.hitbox.position.x + this.hitbox.width >=
-          collisionBlock.position.x &&
-        this.hitbox.position.y + this.hitbox.height >=
-          collisionBlock.position.y &&
-        this.hitbox.position.y <=
-          collisionBlock.position.y + collisionBlock.height
-      ) {
-        // collision on x axis going to the left
-        if (this.velocity.x < -0) {
-          const offset = this.hitbox.position.x - this.position.x;
-          this.position.x =
-            collisionBlock.position.x + collisionBlock.width - offset + 0.01;
-          break;
-        }
+    if (
+      this.hitbox.position.x <= collisionBlock.position.x + collisionBlock.width &&
+      this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x &&
+      this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y &&
+      this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height
+    ) {
+      if (this.velocity.x < -0) {
+        const offset = this.hitbox.position.x - this.position.x;
+        this.position.x = collisionBlock.position.x + collisionBlock.width - offset + 0.01;
+        break;
+      }
 
-        if (this.velocity.x > 0) {
-          const offset =
-            this.hitbox.position.x - this.position.x + this.hitbox.width;
-          this.position.x = collisionBlock.position.x - offset - 0.01;
-          break;
-        }
+      if (this.velocity.x > 0) {
+        const offset = this.hitbox.position.x - this.position.x + this.hitbox.width;
+        this.position.x = collisionBlock.position.x - offset - 0.01;
+        break;
       }
     }
+
+    // Check for wall collision on the left side
+    if (
+      this.hitbox.position.x === collisionBlock.position.x + collisionBlock.width &&
+      this.hitbox.position.y + this.hitbox.height > collisionBlock.position.y &&
+      this.hitbox.position.y < collisionBlock.position.y + collisionBlock.height
+    ) {
+      this.isWallSliding = true;
+      this.isWallJumping = false;
+      this.isWallGrabbing = false;
+      return;
+    }
+
+    // Check for wall collision on the right side
+    if (
+      this.hitbox.position.x + this.hitbox.width === collisionBlock.position.x &&
+      this.hitbox.position.y + this.hitbox.height > collisionBlock.position.y &&
+      this.hitbox.position.y < collisionBlock.position.y + collisionBlock.height
+    ) {
+      this.isWallSliding = true;
+      this.isWallJumping = false;
+      this.isWallGrabbing = false;
+      return;
+    }
   }
+
+  // No wall collision detected
+  this.isWallSliding = false;
+  this.isWallJumping = false;
+  this.isWallGrabbing = false;
+}
 
   applyGravity() {
     this.velocity.y += this.gravity;
@@ -167,32 +242,26 @@ class Player extends Sprite {
   }
 
   checkForVerticalCollisions() {
+    // console.log(this.checkForVerticalCollisions)
     for (let i = 0; i < this.collisionBlocks.length; i++) {
       const collisionBlock = this.collisionBlocks[i];
 
-      // if a collision exists
       if (
-        this.hitbox.position.x <=
-          collisionBlock.position.x + collisionBlock.width &&
-        this.hitbox.position.x + this.hitbox.width >=
-          collisionBlock.position.x &&
-        this.hitbox.position.y + this.hitbox.height >=
-          collisionBlock.position.y &&
-        this.hitbox.position.y <=
-          collisionBlock.position.y + collisionBlock.height
+        this.hitbox.position.x <= collisionBlock.position.x + collisionBlock.width &&
+        this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x &&
+        this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y &&
+        this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height
       ) {
         if (this.velocity.y < 0) {
           this.velocity.y = 0;
           const offset = this.hitbox.position.y - this.position.y;
-          this.position.y =
-            collisionBlock.position.y + collisionBlock.height - offset + 0.01;
+          this.position.y = collisionBlock.position.y + collisionBlock.height - offset + 0.01;
           break;
         }
 
         if (this.velocity.y > 0) {
           this.velocity.y = 0;
-          const offset =
-            this.hitbox.position.y - this.position.y + this.hitbox.height;
+          const offset = this.hitbox.position.y - this.position.y + this.hitbox.height;
           this.position.y = collisionBlock.position.y - offset - 0.01;
           break;
         }
