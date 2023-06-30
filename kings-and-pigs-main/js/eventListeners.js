@@ -1,9 +1,10 @@
-window.addEventListener('keydown', (event) => {
-  if (player.preventInput) return
+window.addEventListener("keydown", (event) => {
+  console.log(event);
+  if (player.preventInput) return;
   switch (event.key) {
-    case 'w':
+    case "w":
       for (let i = 0; i < doors.length; i++) {
-        const door = doors[i]
+        const door = doors[i];
 
         if (
           player.hitbox.position.x + player.hitbox.width <=
@@ -12,39 +13,63 @@ window.addEventListener('keydown', (event) => {
           player.hitbox.position.y + player.hitbox.height >= door.position.y &&
           player.hitbox.position.y <= door.position.y + door.height
         ) {
-          player.velocity.x = 0
-          player.velocity.y = 0
-          player.preventInput = true
-          player.switchSprite('enterDoor')
-          door.play()
-          return
+          player.velocity.x = 0;
+          player.velocity.y = 0;
+          player.preventInput = true;
+          player.switchSprite("enterDoor");
+          door.play();
+          return;
         }
       }
-      if (player.velocity.y === 0) player.velocity.y = -25
+      if (player.velocity.y === 0) player.velocity.y = -25;
 
-      break
-    case 'a':
+      break;
+    case "a":
       // move player to the left
-      keys.a.pressed = true
-      break
-    case 'd':
+      keys.a.pressed = true;
+      break;
+    case "d":
       // move player to the right
-      keys.d.pressed = true
-      break
-  }
-})
+      keys.d.pressed = true;
+      break;
 
-window.addEventListener('keyup', (event) => {
+      case "f":
+        keys.f.pressed = true;
+        break;
+
+    case 'a' && 'f':
+      keys.f.pressed = true;
+      break;
+  
+    case "d" && 'f':
+      keys.f.pressed = true;
+      break;
+  }
+});
+
+window.addEventListener("keyup", (event) => {
   switch (event.key) {
-    case 'a':
+    case "a":
       // move player to the left
-      keys.a.pressed = false
+      keys.a.pressed = false;
 
-      break
-    case 'd':
+      break;
+    case "d":
       // move player to the right
-      keys.d.pressed = false
+      keys.d.pressed = false;
 
-      break
+      break;
+
+    case "f":
+      keys.f.pressed = false;
+      break;
+
+      case "a" && 'f':
+        keys.f.pressed = false;
+        break;
+    
+      case "d" && 'f':
+        keys.f.pressed = false;
+        break;
   }
-})
+});

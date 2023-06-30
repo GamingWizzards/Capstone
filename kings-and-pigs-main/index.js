@@ -19,8 +19,8 @@ const player = new Player({
       imageSrc: './img/AssetPack/Light/idle_blink/idleRight.png',
     },
     idleLeft: {
-      frameRate: 8,
-      frameBuffer: 2,
+      frameRate: 11,
+      frameBuffer: 8,
       loop: true,
       imageSrc: './img/AssetPack/Light/idle_blink/idleLeft.png',
     },
@@ -74,14 +74,14 @@ const player = new Player({
     },
     rollRight: {
       frameRate: 20,
-      frameBuffer: 4,
-      loop: true,
+      frameBuffer: 2,
+      loop: false,
       imageSrc: './img/AssetPack/Light/roll/rollRight.png',
     },
     rollLeft: {
       frameRate: 20,
-      frameBuffer: 4,
-      loop: true,
+      frameBuffer: 2,
+      loop: false,
       imageSrc: './img/AssetPack/Light/roll/rollLeft.png',
     },
     fallRight: {
@@ -243,6 +243,9 @@ const keys = {
   d: {
     pressed: false,
   },
+  f: {
+    pressed: false,
+  }
 }
 
 const overlay = {
