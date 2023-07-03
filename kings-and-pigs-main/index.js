@@ -243,6 +243,15 @@ const keys = {
   d: {
     pressed: false,
   },
+  s: {
+    pressed: false,
+  },
+  q: {
+    pressed: false,
+  },
+  e: {
+    pressed: false,
+  }
 }
 
 const overlay = {
