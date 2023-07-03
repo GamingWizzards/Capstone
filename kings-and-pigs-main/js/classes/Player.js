@@ -38,8 +38,8 @@ class Player extends Sprite {
   }
 
   update() {
-    c.fillStyle = 'rgba(0, 0, 255, 0.5)'
-    c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    // c.fillStyle = 'rgba(0, 0, 255, 0.5)'
+    // c.fillRect(this.position.x, this.position.y, this.width, this.height)
 
     this.position.x += this.velocity.x;
 
@@ -56,12 +56,12 @@ class Player extends Sprite {
 
     this.updateDashing();
 
-    c.fillRect(
-      this.hitbox.position.x,
-      this.hitbox.position.y,
-      this.hitbox.width,
-      this.hitbox.height
-    )
+    // c.fillRect(
+    //   this.hitbox.position.x,
+    //   this.hitbox.position.y,
+    //   this.hitbox.width,
+    //   this.hitbox.height
+    // )
   }
 
 
@@ -99,7 +99,7 @@ class Player extends Sprite {
       this.velocity.x = -8;
       this.lastDirection = 'left';
     }
-    if (keys.f.pressed && !keys.a.pressed && !keys.d.pressed) {
+    if (keys.f.pressed && !keys.a.pressed && !keys.d.pressed && !keys.w.pressed) {
       this.velocity.x = this.lastDirection === 'left' ? -8 : 8;
       if (this.lastDirection === 'left') this.switchSprite('rollLeft');
       if (this.lastDirection === 'right') this.switchSprite('rollRight');
@@ -119,7 +119,7 @@ class Player extends Sprite {
       this.velocity.x = -8;
       this.lastDirection = 'left';
     }
-    if (keys.r.pressed && !keys.a.pressed && !keys.d.pressed) {
+    if (keys.r.pressed && !keys.a.pressed && !keys.d.pressed && !keys.w.pressed) {
       this.velocity.x = this.lastDirection === 'left' ? -8 : 8;
       if (this.lastDirection === 'left') this.switchSprite('dashLeft');
       if (this.lastDirection === 'right') this.switchSprite('dashRight');
