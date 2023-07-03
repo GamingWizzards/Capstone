@@ -246,7 +246,10 @@ const keys = {
   s: {
     pressed: false,
   },
-  Space: {
+  q: {
+    pressed: false,
+  },
+  e: {
     pressed: false,
   }
 }
