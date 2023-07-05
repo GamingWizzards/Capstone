@@ -19,8 +19,8 @@ const player = new Player({
       imageSrc: './img/AssetPack/Light/idle_blink/idleRight.png',
     },
     idleLeft: {
-      frameRate: 8,
-      frameBuffer: 2,
+      frameRate: 11,
+      frameBuffer: 8,
       loop: true,
       imageSrc: './img/AssetPack/Light/idle_blink/idleLeft.png',
     },
@@ -97,16 +97,22 @@ const player = new Player({
       imageSrc: './img/AssetPack/Light/fall/fallLeft.png',
     },
     dashRight: {
-      frameRate: 4,
+      frameRate: 8,
       frameBuffer: 4,
       loop: true,
       imageSrc: './img/AssetPack/Light/dash/dashRight.png',
     },
     dashLeft: {
-      frameRate: 4,
+      frameRate: 8,
       frameBuffer: 4,
       loop: true,
       imageSrc: './img/AssetPack/Light/dash/dashLeft.png',
+    },
+    attackRight: {
+      frameRate: 10,
+      frameBuffer: 4,
+      loop: true,
+      imageSrc: './img/AssetPack/Light/attack1/attackRight.png',
     },
     enterDoor: {
       frameRate: 8,
@@ -250,6 +256,9 @@ const keys = {
     pressed: false,
   },
   e: {
+    pressed: false,
+  },
+  space: {
     pressed: false,
   }
 }

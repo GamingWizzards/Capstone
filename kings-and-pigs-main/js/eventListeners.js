@@ -1,4 +1,5 @@
 window.addEventListener('keydown', (event) => {
+  let jumpCount = 0
   if (player.preventInput) return
   switch (event.key) {
     case 'w':

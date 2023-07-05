@@ -11,14 +11,13 @@ class Player extends Sprite {
       y: 0,
     }
 
-    this.canJump = true;
-
     this.sides = {
       bottom: this.position.y + this.height,
     }
     this.gravity = 1
 
     this.collisionBlocks = collisionBlocks
+    
   }
 
   update() {
@@ -35,18 +34,19 @@ class Player extends Sprite {
 
     this.updateHitbox()
 
-    // c.fillRect(
-    //   this.hitbox.position.x,
-    //   this.hitbox.position.y,
-    //   this.hitbox.width,
-    //   this.hitbox.height
-    // )
+     c.fillRect(
+       this.hitbox.position.x,
+       this.hitbox.position.y,
+       this.hitbox.width,
+       this.hitbox.height
+     )
     this.checkForVerticalCollisions()
+    this.checkForWallCollision()
+    this.checkForFloorCollision()
   }
 
   handleInput(keys) {
     if (this.preventInput) return
-    if (keys.w.pressed && player.velocity.y === 0) player.velocity.y = -23;
     this.velocity.x = 0
     //Run left/right
     if (keys.d.pressed) {
@@ -79,13 +79,15 @@ class Player extends Sprite {
 
     //Dash left/right
     if (keys.d.pressed && keys.s.pressed) {
-      this.switchSprite('dashRight');
+
       this.velocity.x = 10;
       this.lastDirection = 'right';
+      this.switchSprite('dashRight');
     } else if (keys.a.pressed && keys.s.pressed) {
-      this.switchSprite('dashLeft');
+
       this.velocity.x = -10;
       this.lastDirection = 'left';
+      this.switchSprite('dashLeft');
     }
 
     //Wall Slide left/right
@@ -101,24 +103,6 @@ class Player extends Sprite {
     ) {
       this.velocity.y = 1; // Adjust the sliding speed as needed
       this.switchSprite('wallSlideRight');
-    }
-
-    if (keys.w.pressed && this.velocity.y === 0 && this.canJump) {
-      this.velocity.y = -23;
-      this.canJump = false;
-    }
-
-    //Wall
-    if (keys.w.pressed && !this.canJump) {
-      if (this.checkForWallCollision('left')) {
-        this.velocity.x = 300;
-        this.velocity.y = -600;
-        this.switchSprite('right');
-      } else if (this.checkForWallCollision('right')) {
-        this.velocity.x = -300;
-        this.velocity.y = -600;
-        this.switchSprite('left');
-      }
     }
   }
 
