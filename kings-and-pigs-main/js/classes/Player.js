@@ -147,13 +147,15 @@ class Player extends Sprite {
     //Wall Slide left/right
     if (
       (keys.a.pressed && this.position.x !== 0 && !this.checkForFloorCollision()) &&
-      this.checkForWallCollision('left')
+      this.checkForWallCollision('left') &&
+      this.velocity.y >= 0
     ) {
       this.velocity.y = 1; // Adjust the sliding speed as needed
       this.switchSprite('wallSlideLeft');
     } else if (
       (keys.d.pressed && this.position.x !== 0 && !this.checkForFloorCollision()) &&
-      this.checkForWallCollision('right')
+      this.checkForWallCollision('right') &&
+      this.velocity.y >= 0
     ) {
       this.velocity.y = 1; // Adjust the sliding speed as needed
       this.switchSprite('wallSlideRight');
