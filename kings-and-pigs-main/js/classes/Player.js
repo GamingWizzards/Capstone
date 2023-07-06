@@ -86,6 +86,7 @@ class Player extends Sprite {
       if (this.lastDirection === 'left') this.switchSprite('jumpLeft')
       else this.switchSprite('jumpRight')
     }
+
     //Dash
     if (keys.s.pressed) {
       this.startDash();
@@ -127,34 +128,51 @@ class Player extends Sprite {
       if (this.lastDirection === 'right') this.switchSprite('rollRight');
     }
 
-    //Wall Slide left/right
+  // Wall Slide left/right
     if (
-      (keys.a.pressed && this.position.x !== 0 && !this.checkForFloorCollision()) &&
-      this.checkForWallCollision('left') && 
-      this.velocity.y>=0
+      (keys.a.pressed &&
+        this.position.x !== 0 &&
+        !this.checkForFloorCollision()) &&
+      this.checkForWallCollision('left') &&
+      this.velocity.y >= 1 // Check if sliding down the wall
     ) {
       this.velocity.y = 1; // Adjust the sliding speed as needed
       this.switchSprite('wallSlideLeft');
     } else if (
-      (keys.d.pressed && this.position.x !== 0 && !this.checkForFloorCollision()) &&
-      this.checkForWallCollision('right')&& 
-      this.velocity.y>=0
+      (keys.d.pressed &&
+        this.position.x !== 0 &&
+        !this.checkForFloorCollision()) &&
+      this.checkForWallCollision('right') &&
+      this.velocity.y >= 1 // Check if sliding down the wall
     ) {
       this.velocity.y = 1; // Adjust the sliding speed as needed
       this.switchSprite('wallSlideRight');
     }
+  
+// Wall Jump
+if (
+  (checkKeyPressed('a') || checkKeyPressed('d')) &&
+  checkKeyPressed('w') &&
+  !this.checkForFloorCollision() &&
+  this.velocity.y >= 1
+) {
+  console.log('Wall jump!');
 
-// // Wall Jump left/right
-// if (keys.w.pressed && keys.d.pressed && this.checkForWallCollision('left') && this.velocity.y < 0) {
-//   this.velocity.y = -10;  // Adjust the jump height as needed
-//   this.velocity.x = 10;   // Adjust the horizontal jump force as needed
-//   this.switchSprite('jumpRight');  // Change the sprite animation accordingly
-// } else if (keys.w.pressed && keys.a.pressed && this.checkForWallCollision('right') && this.velocity.y < 0) {
-//   this.velocity.y = -10;  // Adjust the jump height as needed
-//   this.velocity.x = -10;  // Adjust the horizontal jump force as needed
-//   this.switchSprite('jumpLeft');  // Change the sprite animation accordingly
+  const wallJumpForce = 8; // Adjust the jump force to control the distance
+  const oppositeDirection = this.lastDirection === 'left' ? 'right' : 'left';
 
-// }
+  if (this.checkForWallCollision('left') && checkKeyPressed('a')) {
+    this.velocity.y = -20; // Adjust the jump height as needed
+    this.velocity.x = wallJumpForce; // Set the initial horizontal jump force
+    this.position.x += this.velocity.x; // Move the player horizontally to initiate the jump
+    this.switchSprite(`jump${oppositeDirection.charAt(0).toUpperCase() + oppositeDirection.slice(1)}`); // Change the sprite animation accordingly
+  } else if (this.checkForWallCollision('right') && checkKeyPressed('d')) {
+    this.velocity.y = -20; // Adjust the jump height as needed
+    this.velocity.x = -wallJumpForce; // Set the initial horizontal jump force
+    this.position.x += this.velocity.x; // Move the player horizontally to initiate the jump
+    this.switchSprite(`jump${oppositeDirection.charAt(0).toUpperCase() + oppositeDirection.slice(1)}`); // Change the sprite animation accordingly
+  }
+}
 
 
   }

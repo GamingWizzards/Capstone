@@ -1,81 +1,62 @@
+const pressedKeys = {};
+
 window.addEventListener('keydown', (event) => {
-  let jumpCount = 0
-  if (player.preventInput) return
-  switch (event.key) {
+  if (player.preventInput) return;
+
+  const key = event.key.toLowerCase(); // Convert the key to lowercase
+
+  pressedKeys[key] = true;
+
+  switch (key) {
     case 'w':
       if (player.velocity.y === 0) player.velocity.y = -25;
-
-      break
+      break;
     case 'a':
       // move player to the left
-      keys.a.pressed = true
-      break
+      keys.a.pressed = true;
+      break;
     case 'd':
       // move player to the right
-      keys.d.pressed = true
-      break
-    case 'a' && 's':
-      // Code for dash left
-      keys.s.pressed = true
-
-      break
-    case 'd' && 's':
-      // Code for dash right
-      keys.s.pressed = true
-
-      break
-    case "f":
-      keys.f.pressed = true;
+      keys.d.pressed = true;
       break;
-
-    case "a" && "f":
-      keys.f.pressed = true;
+    case 's':
+      // Code for dash
+      keys.s.pressed = true;
       break;
-
-    case "d" && "f":
+    case 'f':
       keys.f.pressed = true;
       break;
   }
-})
+});
 
 window.addEventListener('keyup', (event) => {
-  switch (event.key) {
+  const key = event.key.toLowerCase(); // Convert the key to lowercase
+
+  pressedKeys[key] = false;
+
+  switch (key) {
     case 'w':
       // move player to the left
-      keys.w.pressed = false
-
-      break
+      keys.w.pressed = false;
+      break;
     case 'a':
       // move player to the left
-      keys.a.pressed = false
-
-      break
+      keys.a.pressed = false;
+      break;
     case 'd':
       // move player to the right
-      keys.d.pressed = false
-
-      break
-    case 'a' && 's':
-      // Code for dash left
-      keys.s.pressed = false
-
-      break
-    case 'd' && 's':
-      // Code for dash right
-      keys.s.pressed = false
-
-      break
-    case "f":
+      keys.d.pressed = false;
+      break;
+    case 's':
+      // Code for dash
+      keys.s.pressed = false;
+      break;
+    case 'f':
       keys.f.pressed = false;
       break;
-
-    case "a" && "f":
-      keys.f.pressed = false;
-      break;
-
-    case "d" && "f":
-      keys.f.pressed = false;
-      break;
-
   }
-})
+});
+
+function checkKeyPressed(key) {
+  return pressedKeys[key.toLowerCase()] === true; // Convert the key to lowercase for consistency
+}
