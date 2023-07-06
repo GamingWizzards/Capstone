@@ -1,0 +1,2 @@
+playerMove();
+showCollisionMask();

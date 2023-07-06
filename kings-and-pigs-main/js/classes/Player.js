@@ -86,24 +86,7 @@ class Player extends Sprite {
       if (this.lastDirection === 'left') this.switchSprite('jumpLeft')
       else this.switchSprite('jumpRight')
     }
-
-    // if (keys.s.pressed) {
-    //   this.startDash();
-    // }
-
-    //Dash left/right
-    // if (keys.d.pressed && keys.s.pressed) {
-
-    //   this.velocity.x = 10;
-    //   this.lastDirection = 'right';
-    //   this.switchSprite('dashRight');
-    // } else if (keys.a.pressed && keys.s.pressed) {
-
-    //   this.velocity.x = -10;
-    //   this.lastDirection = 'left';
-    //   this.switchSprite('dashLeft');
-    // }
-
+    //Dash
     if (keys.s.pressed) {
       this.startDash();
     }
@@ -147,17 +130,33 @@ class Player extends Sprite {
     //Wall Slide left/right
     if (
       (keys.a.pressed && this.position.x !== 0 && !this.checkForFloorCollision()) &&
-      this.checkForWallCollision('left')
+      this.checkForWallCollision('left') && 
+      this.velocity.y>=0
     ) {
       this.velocity.y = 1; // Adjust the sliding speed as needed
       this.switchSprite('wallSlideLeft');
     } else if (
       (keys.d.pressed && this.position.x !== 0 && !this.checkForFloorCollision()) &&
-      this.checkForWallCollision('right')
+      this.checkForWallCollision('right')&& 
+      this.velocity.y>=0
     ) {
       this.velocity.y = 1; // Adjust the sliding speed as needed
       this.switchSprite('wallSlideRight');
     }
+
+// // Wall Jump left/right
+// if (keys.w.pressed && keys.d.pressed && this.checkForWallCollision('left') && this.velocity.y < 0) {
+//   this.velocity.y = -10;  // Adjust the jump height as needed
+//   this.velocity.x = 10;   // Adjust the horizontal jump force as needed
+//   this.switchSprite('jumpRight');  // Change the sprite animation accordingly
+// } else if (keys.w.pressed && keys.a.pressed && this.checkForWallCollision('right') && this.velocity.y < 0) {
+//   this.velocity.y = -10;  // Adjust the jump height as needed
+//   this.velocity.x = -10;  // Adjust the horizontal jump force as needed
+//   this.switchSprite('jumpLeft');  // Change the sprite animation accordingly
+
+// }
+
+
   }
 
   checkForFloorCollision() {
@@ -226,6 +225,14 @@ class Player extends Sprite {
        this.canJump = true; // Allow jumping again
        keys.w.pressed = false; // Reset the 'w' key press state to allow jumping again
      }*/
+    //  if (
+    //   wallHitbox.position.y + wallHitbox.height >= this.position.y &&
+    //   wallHitbox.position.y <= this.position.y + this.height &&
+    //   wallHitbox.position.x <= this.position.x + this.width &&
+    //   wallHitbox.position.x + wallHitbox.width >= this.position.x
+    // ) {
+    //   wallCollisionDetected = true;
+    // }
 
     return wallCollisionDetected;
   }
@@ -234,7 +241,7 @@ class Player extends Sprite {
   startRoll() {
     if (!this.isRolling) {
       this.isRolling = true;
-      this.rollVelocity = this.lastDirection === 'left' ? -10 : 10;
+      this.rollVelocity = this.lastDirection === 'left' ? -16 : 16;
       // Add any additional logic or animations for the roll
     }
   }
@@ -244,7 +251,7 @@ class Player extends Sprite {
       this.rollVelocity *= 1 - this.rollDeceleration;
       if (Math.abs(this.rollVelocity) < 1) {
         this.isRolling = false;
-        this.rollVelocity = this.lastDirection === 'left' ? -10 : 10;
+        this.rollVelocity = this.lastDirection === 'left' ? -16 : 16;
       }
     }
   }

@@ -1,0 +1,1 @@
+draw_text(10, 10, "Press space key to toggle collision Mask.")
