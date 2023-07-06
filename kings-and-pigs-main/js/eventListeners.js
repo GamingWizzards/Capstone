@@ -3,7 +3,7 @@ window.addEventListener('keydown', (event) => {
   if (player.preventInput) return
   switch (event.key) {
     case 'w':
-      if (player.velocity.y === 0) player.velocity.y = -23;
+      if (player.velocity.y === 0) player.velocity.y = -25;
 
       break
     case 'a':
