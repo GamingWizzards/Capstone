@@ -219,7 +219,7 @@ let levels = {
           x: 0,
           y: 0,
         },
-        imageSrc: './img/backgroundLevel3.png',
+        imageSrc: './img/mapTest.png',
       })
 
       doors = [
@@ -271,8 +271,9 @@ function animate() {
   window.requestAnimationFrame(animate)
 
   background.draw()
-  // collisionBlocks.forEach((collisionBlock) => {
-  //   collisionBlock.draw()
+     //Collision walls code to see collisionsBlocks
+   //collisionBlocks.forEach((collisionBlock) => {
+   // collisionBlock.draw()
   // })
 
   doors.forEach((door) => {

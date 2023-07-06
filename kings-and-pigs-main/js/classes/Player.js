@@ -21,9 +21,7 @@ class Player extends Sprite {
   }
 
   update() {
-    // this is the blue box
-    c.fillStyle = 'rgba(0, 0, 255, 0.5)'
-    c.fillRect(this.position.x, this.position.y, this.width, this.height)
+
 
     this.position.x += this.velocity.x
 
@@ -33,7 +31,9 @@ class Player extends Sprite {
     this.applyGravity()
 
     this.updateHitbox()
-
+        // this is the blue box
+    c.fillStyle = 'rgba(0, 0, 255, 0.5)'
+    c.fillRect(this.position.x, this.position.y, this.width, this.height)
      c.fillRect(
        this.hitbox.position.x,
        this.hitbox.position.y,
@@ -41,8 +41,6 @@ class Player extends Sprite {
        this.hitbox.height
      )
     this.checkForVerticalCollisions()
-    this.checkForWallCollision()
-    this.checkForFloorCollision()
   }
 
   handleInput(keys) {
@@ -167,11 +165,11 @@ class Player extends Sprite {
       }
     }
 
-    if (wallCollisionDetected) {
+   /* if (wallCollisionDetected) {
       this.velocity.y = 0;
       this.canJump = true; // Allow jumping again
       keys.w.pressed = false; // Reset the 'w' key press state to allow jumping again
-    }
+    }*/
 
     return wallCollisionDetected;
   }
@@ -200,7 +198,7 @@ class Player extends Sprite {
       height: 53,
     }
   }
-
+//left and right
   checkForHorizontalCollisions() {
     for (let i = 0; i < this.collisionBlocks.length; i++) {
       const collisionBlock = this.collisionBlocks[i];
@@ -240,7 +238,7 @@ class Player extends Sprite {
     this.velocity.y += this.gravity
     this.position.y += this.velocity.y
   }
-
+// up and down
   checkForVerticalCollisions() {
     for (let i = 0; i < this.collisionBlocks.length; i++) {
       const collisionBlock = this.collisionBlocks[i]
