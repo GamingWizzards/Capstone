@@ -1,8 +1,10 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-canvas.width = 64 * 16 // 1024
-canvas.height = 64 * 9 // 576
+// canvas.width = 64 * 16 // 1024
+// canvas.height = 64 * 9 // 576
+canvas.width = 64 * 64 // 1024
+canvas.height = 64 * 64 // 576
 
 let parsedCollisions
 let collisionBlocks
@@ -213,7 +215,7 @@ let levels = {
           x: 0,
           y: 0,
         },
-        imageSrc: './img/backgroundLevel3.png',
+        imageSrc: './img/Amissa.png',
       })
 
       doors = [
