@@ -18,6 +18,14 @@ class Player extends Sprite {
 
     this.collisionBlocks = collisionBlocks
 
+    this.isRolling = false;
+    this.rollVelocity = 10;
+    this.rollAcceleration = 0.2;
+    this.rollDeceleration = 0.1;
+    this.initialX = this.position.x;
+    this.isDashing = false;
+    this.dashDeceleration = 0.1;
+
   }
 
   update() {
@@ -41,9 +49,13 @@ class Player extends Sprite {
      // this.hitbox.height
    // )
     this.checkForVerticalCollisions()
+    this.updateRolling()
+    this.updateDashing()
   }
 
   handleInput(keys) {
+    if (this.isRolling) return;
+    if (this.isDashing) return;
     if (this.preventInput) return
     this.velocity.x = 0
     //Run left/right
@@ -75,17 +87,61 @@ class Player extends Sprite {
       else this.switchSprite('jumpRight')
     }
 
+    // if (keys.s.pressed) {
+    //   this.startDash();
+    // }
+
     //Dash left/right
-    if (keys.d.pressed && keys.s.pressed) {
+    // if (keys.d.pressed && keys.s.pressed) {
 
-      this.velocity.x = 10;
-      this.lastDirection = 'right';
+    //   this.velocity.x = 10;
+    //   this.lastDirection = 'right';
+    //   this.switchSprite('dashRight');
+    // } else if (keys.a.pressed && keys.s.pressed) {
+
+    //   this.velocity.x = -10;
+    //   this.lastDirection = 'left';
+    //   this.switchSprite('dashLeft');
+    // }
+
+    if (keys.s.pressed) {
+      this.startDash();
+    }
+    if (keys.s.pressed && keys.d.pressed) {
       this.switchSprite('dashRight');
-    } else if (keys.a.pressed && keys.s.pressed) {
-
-      this.velocity.x = -10;
-      this.lastDirection = 'left';
+      this.velocity.x = 8;
+      this.lastDirection = 'right';
+    }
+    if (keys.s.pressed && keys.a.pressed) {
       this.switchSprite('dashLeft');
+      this.velocity.x = -8;
+      this.lastDirection = 'left';
+    }
+    if (keys.s.pressed && !keys.a.pressed && !keys.d.pressed && !keys.w.pressed) {
+      this.velocity.x = this.lastDirection === 'left' ? -8 : 8;
+      if (this.lastDirection === 'left') this.switchSprite('dashLeft');
+      if (this.lastDirection === 'right') this.switchSprite('dashRight');
+    }
+
+    //Roll
+    if (keys.f.pressed) {
+      this.startRoll();
+    }
+
+    if (keys.f.pressed && keys.d.pressed) {
+      this.switchSprite('rollRight');
+      this.velocity.x = 8;
+      this.lastDirection = 'right';
+    }
+    if (keys.f.pressed && keys.a.pressed) {
+      this.switchSprite('rollLeft');
+      this.velocity.x = -8;
+      this.lastDirection = 'left';
+    }
+    if (keys.f.pressed && !keys.a.pressed && !keys.d.pressed && !keys.w.pressed) {
+      this.velocity.x = this.lastDirection === 'left' ? -8 : 8;
+      if (this.lastDirection === 'left') this.switchSprite('rollLeft');
+      if (this.lastDirection === 'right') this.switchSprite('rollRight');
     }
 
     //Wall Slide left/right
@@ -175,7 +231,43 @@ class Player extends Sprite {
   }
 
 
-
+  startRoll() {
+    if (!this.isRolling) {
+      this.isRolling = true;
+      this.rollVelocity = this.lastDirection === 'left' ? -10 : 10;
+      // Add any additional logic or animations for the roll
+    }
+  }
+  updateRolling() {
+    if (this.isRolling) {
+      this.position.x += this.rollVelocity;
+      this.rollVelocity *= 1 - this.rollDeceleration;
+      if (Math.abs(this.rollVelocity) < 1) {
+        this.isRolling = false;
+        this.rollVelocity = this.lastDirection === 'left' ? -10 : 10;
+      }
+    }
+  }
+  startDash() {
+    if (!this.isDashing && !this.isRolling) { // Check if not already dashing or rolling
+      this.isDashing = true;
+      this.dashVelocity = this.lastDirection === 'left' ? -12 : 12;
+      this.dashDuration = 0; // Initialize the dash duration
+      this.maxDashDuration = 15; // Adjust this value according to your needs
+      // Add any additional logic or animations for the dash
+    }
+  }
+  updateDashing() {
+    if (this.isDashing) {
+      if (this.dashDuration < this.maxDashDuration) {
+        this.position.x += this.dashVelocity;
+        this.dashDuration++;
+      } else {
+        this.isDashing = false;
+        this.dashVelocity = 0;
+      }
+    }
+  }
 
 
   switchSprite(name) {

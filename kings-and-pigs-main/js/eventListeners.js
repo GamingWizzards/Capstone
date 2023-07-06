@@ -23,6 +23,18 @@ window.addEventListener('keydown', (event) => {
       // Code for dash right
       keys.s.pressed = true
 
+      break
+    case "f":
+      keys.f.pressed = true;
+      break;
+
+    case "a" && "f":
+      keys.f.pressed = true;
+      break;
+
+    case "d" && "f":
+      keys.f.pressed = true;
+      break;
   }
 })
 
@@ -53,6 +65,17 @@ window.addEventListener('keyup', (event) => {
       keys.s.pressed = false
 
       break
+    case "f":
+      keys.f.pressed = false;
+      break;
+
+    case "a" && "f":
+      keys.f.pressed = false;
+      break;
+
+    case "d" && "f":
+      keys.f.pressed = false;
+      break;
 
   }
 })
