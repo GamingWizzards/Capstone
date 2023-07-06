@@ -140,6 +140,8 @@ const player = new Player({
   },
 })
 
+const camera = new window.Camera(player, { width: canvas.width, height: canvas.height })
+
 let level = 1;
 let levels = {
   1: {
@@ -198,7 +200,7 @@ const keys = {
   space: {
     pressed: false,
   },
-  f:{
+  f: {
     pressed: false
   }
 }
@@ -209,6 +211,18 @@ const overlay = {
 
 function animate() {
   window.requestAnimationFrame(animate)
+
+  // Update camera here, before you start drawing.
+  camera.update()
+
+  // Clear the entire canvas
+  c.clearRect(0, 0, canvas.width, canvas.height)
+
+  // Save the context state
+  c.save()
+
+  // Translate the context by the negative of the camera's offset
+  c.translate(-camera.offset.x, -camera.offset.y)
 
   background.draw()
 
@@ -228,7 +242,9 @@ function animate() {
   c.save()
   c.globalAlpha = overlay.opacity
   c.fillStyle = 'black'
-  c.fillRect(0, 0, canvas.width, canvas.height)
+  c.fillRect(camera.offset.x, camera.offset.y, canvas.width, canvas.height)
+  c.restore()
+
   c.restore()
 }
 
