@@ -179,16 +179,16 @@ let levels = {
 }
 
 const keys = {
-  w: {
-    pressed: false,
-  },
+  // w: {
+  //   pressed: false,
+  // },
   a: {
     pressed: false,
   },
   d: {
     pressed: false,
   },
-  s: {
+  shift: {
     pressed: false,
   },
   q: {
@@ -197,7 +197,7 @@ const keys = {
   e: {
     pressed: false,
   },
-  space: {
+  Spacebar: {
     pressed: false,
   },
   f: {

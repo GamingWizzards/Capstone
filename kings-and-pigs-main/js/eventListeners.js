@@ -8,7 +8,7 @@ window.addEventListener('keydown', (event) => {
   pressedKeys[key] = true;
 
   switch (key) {
-    case 'w':
+    case ' ':
       if (player.velocity.y === 0) player.velocity.y = -25;
       break;
     case 'a':
@@ -19,9 +19,9 @@ window.addEventListener('keydown', (event) => {
       // move player to the right
       keys.d.pressed = true;
       break;
-    case 's':
+    case 'shift':
       // Code for dash
-      keys.s.pressed = true;
+      keys.shift.pressed = true;
       break;
     case 'f':
       keys.f.pressed = true;
@@ -35,9 +35,9 @@ window.addEventListener('keyup', (event) => {
   pressedKeys[key] = false;
 
   switch (key) {
-    case 'w':
+    case ' ':
       // move player to the left
-      keys.w.pressed = false;
+      keys.Spacebar.pressed = false;
       break;
     case 'a':
       // move player to the left
@@ -47,9 +47,9 @@ window.addEventListener('keyup', (event) => {
       // move player to the right
       keys.d.pressed = false;
       break;
-    case 's':
+    case 'shift':
       // Code for dash
-      keys.s.pressed = false;
+      keys.shift.pressed = false;
       break;
     case 'f':
       keys.f.pressed = false;
