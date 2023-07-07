@@ -1,8 +1,8 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-canvas.width = 64 * 32 // 2048
-canvas.height = 64 * 18 // 1152
+canvas.width = 64 * 128 // 8192
+canvas.height = 64 * 72 // 4608
 
 let parsedCollisions
 let collisionBlocks
@@ -156,7 +156,7 @@ let levels = {
           x: 0,
           y: 0,
         },
-        imageSrc: './img/mapTest2.png',
+        imageSrc: './img/newMap.png',
       });
 
       // doors = [
