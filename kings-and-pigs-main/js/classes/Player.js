@@ -269,16 +269,20 @@ if (
       // Add any additional logic or animations for the roll
     }
   }
-  updateRolling() {
-    if (this.isRolling) {
-      this.position.x += this.rollVelocity;
-      this.rollVelocity *= 1 - this.rollDeceleration;
-      if (Math.abs(this.rollVelocity) < 1) {
-        this.isRolling = false;
-        this.rollVelocity = this.lastDirection === 'left' ? -16 : 16;
+    updateRolling() {
+      if (this.isRolling) {
+        const previousX = this.position.x;
+  
+        this.position.x += this.rollVelocity;
+        this.rollVelocity *= 1 - this.rollDeceleration;
+  
+        if (Math.abs(this.rollVelocity) < 1) {
+          this.position.x = previousX
+          this.isRolling = false;
+          this.rollVelocity = this.lastDirection === 'left' ? -16 : 16;
+        }
       }
     }
-  }
   startDash() {
     if (!this.isDashing && !this.isRolling) { // Check if not already dashing or rolling
       this.isDashing = true;
