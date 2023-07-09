@@ -115,10 +115,10 @@ const player = new Player({
       imageSrc: './img/AssetPack/Light/attack1/attackRight.png',
     },
     enterDoor: {
-      frameRate: 8,
+      frameRate: 20,
       frameBuffer: 4,
       loop: false,
-      imageSrc: './img/king/enterDoor.png',
+      imageSrc: './img/AssetPack/Light/roll/rollLeft.png',
       onComplete: () => {
         console.log('completed animation')
         gsap.to(overlay, {
@@ -149,8 +149,8 @@ let levels = {
       parsedCollisions = collisionsLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
       player.collisionBlocks = collisionBlocks;
-      player.position.x = 750;
-      player.position.y = 230;
+      player.position.x = 250;
+      player.position.y = 3844;
       if (player.currentAnimation) player.currentAnimation.isActive = false;
 
       background = new Sprite({
@@ -158,24 +158,60 @@ let levels = {
           x: 0,
           y: 0,
         },
-        imageSrc: './img/transitionLvl.png',
+        imageSrc: './img/RightSideMapDetailed.png',
       });
 
-      // doors = [
-      //   new Sprite({
-      //     position: {
-      //       x: 176.0,
-      //       y: 335,
-      //     },
-      //     imageSrc: './img/doorOpen.png',
-      //     frameRate: 5,
-      //     frameBuffer: 5,
-      //     loop: false,
-      //     autoplay: false,
-      //   }),
-      // ]
+      doors = [
+        new Sprite({
+          position: {
+            x: 165,
+            y: 3760,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+      ]
+
+      //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
     },
   },
+  // 2: {
+  //   init: () => {
+  //     parsedCollisions = collisionsLevel2.parse2D()
+  //     collisionBlocks = parsedCollisions.createObjectsFrom2D()
+  //     player.collisionBlocks = collisionBlocks
+  //     player.position.x = 3
+  //     player.position.y = 61
+
+  //     if (player.currentAnimation) player.currentAnimation.isActive = false
+
+  //     background = new Sprite({
+  //       position: {
+  //         x: 0,
+  //         y: 0,
+  //       },
+  //       imageSrc: './img/RightSideMapTest1.png',
+  //     })
+
+  //     doors = [
+  //       new Sprite({
+  //         position: {
+  //           x: 772.0,
+  //           y: 336,
+  //         },
+  //         imageSrc: './img/doorOpen.png',
+  //         frameRate: 5,
+  //         frameBuffer: 5,
+  //         loop: false,
+  //         autoplay: false,
+  //       }),
+  //     ]
+  //   },
+  // },
+
 }
 
 const keys = {
@@ -231,9 +267,9 @@ function animate() {
   // collisionBlock.draw()
   // })
 
-  // doors.forEach((door) => {
-  //   door.draw()
-  // })
+  doors.forEach((door) => {
+    door.draw()
+  })
 
   player.handleInput(keys)
   player.draw()
