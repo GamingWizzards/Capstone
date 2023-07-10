@@ -31,24 +31,50 @@ class Player extends Sprite {
 
   }
 
-handleDeath() {
-  // Perform any actions or animations related to the player's death
-  console.log("Colliding with a lethal block!");
-  // Reset the player's position or any other necessary game state
-  this.position.x = 200;
-  this.position.y = 200;
+  handleDeath() {
+    // Perform any actions or animations related to the player's death
+    console.log("Colliding with a lethal block!");
+    // Reset the player's position or any other necessary game state
+    this.position.x = 200;
+    this.position.y = 3750;
+  }
 
-  // You can also reset other variables, such as health or power-ups
-
-  // Restart the level or perform any necessary game over logic
-}
+  checkCollisionWithLethalBlocks() {
+    const isCollidingWithLethalBlock = this.lethalBlocks.some(lethalBlock => {
+      return (
+        this.hitbox.position.x <= lethalBlock.position.x + lethalBlock.width &&
+        this.hitbox.position.x + this.hitbox.width >= lethalBlock.position.x &&
+        this.hitbox.position.y + this.hitbox.height >= lethalBlock.position.y &&
+        this.hitbox.position.y <= lethalBlock.position.y + lethalBlock.height &&
+        lethalBlock.symbol === 5856
+      );
+    });
+  
+    const isCollidingWithCollisionBlock = this.collisionBlocks.some(collisionBlock => {
+      return (
+        this.hitbox.position.x <= collisionBlock.position.x + collisionBlock.width &&
+        this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x &&
+        this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y &&
+        this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height &&
+        collisionBlock.symbol === 5857
+      );
+    });
+  
+    if (isCollidingWithLethalBlock && !isCollidingWithCollisionBlock) {
+      console.log("Colliding with a lethal block!");
+      this.handleDeath();
+    }
+  }
 
   update() {
 
 
     this.position.x += this.velocity.x
 
+    
     this.updateHitbox()
+    
+    this.checkCollisionWithLethalBlocks();
 
     this.checkForHorizontalCollisions()
     this.applyGravity()
@@ -228,7 +254,7 @@ if (
 
 
   checkForWallCollision(direction) {
-    const wallOffset = 5; // Adjust as needed to ensure accurate collision detection
+    const wallOffset = 10; // Adjust as needed to ensure accurate collision detection
     const wallHitbox = {
       position: {
         x: this.hitbox.position.x + (direction === 'left' ? -wallOffset : this.hitbox.width + wallOffset),
@@ -389,7 +415,8 @@ if (
         this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x &&
         this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y &&
         this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height &&
-        collisionBlock.isLethal // Add a property to collision blocks to indicate if it's a lethal block
+        collisionBlock.symbol === 5856 && // Add a property to collision blocks to indicate if it's a lethal block
+        collisionBlock.isLethal
       );
     });
   

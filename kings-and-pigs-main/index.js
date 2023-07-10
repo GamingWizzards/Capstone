@@ -150,6 +150,9 @@ let levels = {
     init: () => {
       parsedCollisions = collisionsLevel2.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
+      // lethalCollisions = collisionsLethalLevel1.createObjects2From2D();
+      // lethalBlocks = collisionsLethalLevel1.createObjects2From2D();
+      player.lethalBlocks = lethalBlocks;
       player.collisionBlocks = collisionBlocks;
       player.position.x = 250;
       player.position.y = 3844;
@@ -176,7 +179,7 @@ let levels = {
           autoplay: false,
         }),
       ];
-      lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLethalLevel1);
+      lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLevel2);
       player.lethalBlocks = lethalBlocks; 
       //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
     },

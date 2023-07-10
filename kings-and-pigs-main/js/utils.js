@@ -11,7 +11,7 @@ Array.prototype.createObjectsFrom2D = function () {
   const objects = []
   this.forEach((row, y) => {
     row.forEach((symbol, x) => {
-      if (symbol === 5858 || symbol === 258) {
+      if (symbol === 5857 || symbol === 258) {
         // push a new collision into collisionblocks array
         objects.push(
           new CollisionBlock({
@@ -23,18 +23,7 @@ Array.prototype.createObjectsFrom2D = function () {
             isLethal: false, // Add the symbol property to the collision block
           })
         )
-      } else if (symbol === 5857) {
-        objects.push(
-          new CollisionBlock({
-            position: {
-              x: x * 64,
-              y: y * 64,
-            },
-            symbol: symbol,
-            isLethal: true,
-          })
-        );
-      }
+      } 
     });
   });
 
@@ -42,3 +31,24 @@ Array.prototype.createObjectsFrom2D = function () {
 
   return objects
 }
+
+// Array.prototype.createObjects2From2D = function () {
+//   const objects = []
+//   this.forEach((row, y) => {
+//     row.forEach((symbol, x) => {
+//       if (symbol === 5857 ) {
+//         // push a new collision into collisionblocks array
+//         objects.push(
+//           new CollisionBlock({
+//             position: {
+//               x: x * 64,
+//               y: y * 64,
+//             },
+//           })
+//         )
+//       }
+//     })
+//   })
+
+//   return objects
+// }
