@@ -19,11 +19,26 @@ Array.prototype.createObjectsFrom2D = function () {
               x: x * 64,
               y: y * 64,
             },
+            symbol: symbol,
+            isLethal: false, // Add the symbol property to the collision block
           })
         )
+      } else if (symbol === 5857) {
+        objects.push(
+          new CollisionBlock({
+            position: {
+              x: x * 64,
+              y: y * 64,
+            },
+            symbol: symbol,
+            isLethal: true,
+          })
+        );
       }
-    })
-  })
+    });
+  });
+
+  
 
   return objects
 }

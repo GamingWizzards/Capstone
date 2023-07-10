@@ -8,6 +8,8 @@ let parsedCollisions
 let collisionBlocks
 let background
 let doors
+let lethalBlocks
+
 const player = new Player({
   imageSrc: './img/AssetPack/Light/idle_blink/idleRight.png',
   frameRate: 11,
@@ -146,7 +148,7 @@ let level = 1;
 let levels = {
   1: {
     init: () => {
-      parsedCollisions = collisionsLevel1.parse2D();
+      parsedCollisions = collisionsLevel2.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
       player.collisionBlocks = collisionBlocks;
       player.position.x = 250;
@@ -173,8 +175,9 @@ let levels = {
           loop: true,
           autoplay: false,
         }),
-      ]
-
+      ];
+      lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLethalLevel1);
+      player.lethalBlocks = lethalBlocks; 
       //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
     },
   },

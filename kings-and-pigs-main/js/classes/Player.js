@@ -1,5 +1,5 @@
 class Player extends Sprite {
-  constructor({ collisionBlocks = [], imageSrc, frameRate, animations, loop }) {
+  constructor({ collisionBlocks = [],lethalBlocks = [], imageSrc, frameRate, animations, loop }) {
     super({ imageSrc, frameRate, animations, loop })
     this.position = {
       x: 200,
@@ -17,6 +17,7 @@ class Player extends Sprite {
     this.gravity = 1
 
     this.collisionBlocks = collisionBlocks
+    this.lethalBlocks = lethalBlocks;
 
     this.isRolling = false;
     this.rollVelocity = 10;
@@ -26,7 +27,21 @@ class Player extends Sprite {
     this.isDashing = false;
     this.dashDeceleration = 0.1;
 
+    this.lethalBlocks = lethalBlocks;
+
   }
+
+handleDeath() {
+  // Perform any actions or animations related to the player's death
+  console.log("Colliding with a lethal block!");
+  // Reset the player's position or any other necessary game state
+  this.position.x = 200;
+  this.position.y = 200;
+
+  // You can also reset other variables, such as health or power-ups
+
+  // Restart the level or perform any necessary game over logic
+}
 
   update() {
 
@@ -366,37 +381,50 @@ if (
     this.position.y += this.velocity.y
   }
   // up and down
+  
   checkForVerticalCollisions() {
+    const isCollidingWithLethalBlock = this.collisionBlocks.some(collisionBlock => {
+      return (
+        this.hitbox.position.x <= collisionBlock.position.x + collisionBlock.width &&
+        this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x &&
+        this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y &&
+        this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height &&
+        collisionBlock.isLethal // Add a property to collision blocks to indicate if it's a lethal block
+      );
+    });
+  
+    if (isCollidingWithLethalBlock) {
+      console.log("Colliding with a lethal block!");
+      this.handleDeath();
+      return;
+    }
+  
     for (let i = 0; i < this.collisionBlocks.length; i++) {
-      const collisionBlock = this.collisionBlocks[i]
-
-      // if a collision exists
+      const collisionBlock = this.collisionBlocks[i];
+  
       if (
-        this.hitbox.position.x <=
-        collisionBlock.position.x + collisionBlock.width &&
-        this.hitbox.position.x + this.hitbox.width >=
-        collisionBlock.position.x &&
-        this.hitbox.position.y + this.hitbox.height >=
-        collisionBlock.position.y &&
-        this.hitbox.position.y <=
-        collisionBlock.position.y + collisionBlock.height
+        this.hitbox.position.x <= collisionBlock.position.x + collisionBlock.width &&
+        this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x &&
+        this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y &&
+        this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height
       ) {
         if (this.velocity.y < 0) {
-          this.velocity.y = 0
-          const offset = this.hitbox.position.y - this.position.y
-          this.position.y =
-            collisionBlock.position.y + collisionBlock.height - offset + 0.01
-          break
+          this.velocity.y = 0;
+          const offset = this.hitbox.position.y - this.position.y;
+          this.position.y = collisionBlock.position.y + collisionBlock.height - offset + 0.01;
+          break;
         }
-
+  
         if (this.velocity.y > 0) {
-          this.velocity.y = 0
-          const offset =
-            this.hitbox.position.y - this.position.y + this.hitbox.height
-          this.position.y = collisionBlock.position.y - offset - 0.01
-          break
+          this.velocity.y = 0;
+          const offset = this.hitbox.position.y - this.position.y + this.hitbox.height;
+          this.position.y = collisionBlock.position.y - offset - 0.01;
+          break;
         }
       }
     }
   }
+  
+  
+
 }
