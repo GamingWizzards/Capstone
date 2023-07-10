@@ -25,6 +25,8 @@ class Player extends Sprite {
     this.initialX = this.position.x;
     this.isDashing = false;
     this.dashDeceleration = 0.1;
+    this.canRoll = true;
+
 
   }
 
@@ -58,6 +60,14 @@ class Player extends Sprite {
     if (this.isDashing) return;
     if (this.preventInput) return
     this.velocity.x = 0
+    const isShiftPressed = keys.shift.pressed;
+
+    // Check if F key is pressed
+    const isFPressed = keys.f.pressed;
+  
+    // Delay in milliseconds before executing the action
+    const tapDelay = 50;
+
     //Run left/right
     if (keys.d.pressed) {
       this.switchSprite('runRight')
@@ -88,8 +98,19 @@ class Player extends Sprite {
     }
 
     //Dash
-    if (keys.shift.pressed) {
-      this.startDash();
+    if (keys.shift.pressed && !this.isRolling && !this.isDashing) {
+      if (isShiftPressed && !this.isRolling && !this.isDashing) {
+        if (!this.isShiftHeld) {
+          this.isShiftHeld = true;
+          setTimeout(() => {
+            if (this.isShiftHeld) {
+              this.startDash();
+            }
+          }, tapDelay);
+        }
+      } else {
+        this.isShiftHeld = false;
+      }
     }
     if (keys.shift.pressed && keys.d.pressed) {
       this.switchSprite('dashRight');
@@ -108,8 +129,19 @@ class Player extends Sprite {
     }
 
     //Roll
-    if (keys.f.pressed) {
-      this.startRoll();
+    if (keys.f.pressed && !this.isRolling && !this.isDashing && this.canRoll) {
+      if (!this.isFHeld) {
+        this.isFHeld = true;
+        setTimeout(() => {
+          if (this.isFHeld) {
+            this.canRoll = false;
+            this.startRoll();
+          }
+        }, tapDelay);
+      }
+    } else {
+      this.isFHeld = false;
+    
     }
 
     if (keys.f.pressed && keys.d.pressed) {
@@ -129,25 +161,36 @@ class Player extends Sprite {
     }
 
   // Wall Slide left/right
-    if (
-      (keys.a.pressed &&
-        this.position.x !== 0 &&
-        !this.checkForFloorCollision()) &&
-      this.checkForWallCollision('left') &&
-      this.velocity.y >= 1 // Check if sliding down the wall
-    ) {
-      this.velocity.y = 1; // Adjust the sliding speed as needed
-      this.switchSprite('wallSlideLeft');
-    } else if (
-      (keys.d.pressed &&
-        this.position.x !== 0 &&
-        !this.checkForFloorCollision()) &&
-      this.checkForWallCollision('right') &&
-      this.velocity.y >= 1 // Check if sliding down the wall
-    ) {
-      this.velocity.y = 1; // Adjust the sliding speed as needed
-      this.switchSprite('wallSlideRight');
+  if (
+    (keys.a.pressed && this.position.x !== 0 && !this.checkForFloorCollision()) &&
+    this.checkForWallCollision('left') &&
+    this.velocity.y >= 0
+  ) {
+    this.velocity.y = 1; // Adjust the sliding speed as needed
+    this.switchSprite('wallSlideLeft');
+    if (keys.shift.pressed) {
+      // Dash opposite way during wall slide
+      this.velocity.x = 32;
+      this.lastDirection = 'right';
+      this.switchSprite('dashRight');
+      this.startDash();
     }
+  } else if (
+    (keys.d.pressed && this.position.x !== 0 && !this.checkForFloorCollision()) &&
+    this.checkForWallCollision('right') &&
+    this.velocity.y >= 0
+  ) {
+    this.velocity.y = 1; // Adjust the sliding speed as needed
+    this.switchSprite('wallSlideRight');
+    if (keys.shift.pressed) {
+      // Dash opposite way during wall slide
+      this.velocity.x = -32;
+      this.lastDirection = 'left';
+      this.switchSprite('dashLeft');
+      this.startDash();
+    }
+  }
+    
 // Wall Jump
 if (
   (checkKeyPressed('a') || checkKeyPressed('d')) &&
@@ -266,7 +309,6 @@ if (
     if (!this.isRolling) {
       this.isRolling = true;
       this.rollVelocity = this.lastDirection === 'left' ? -16 : 16;
-      // Add any additional logic or animations for the roll
     }
   }
     updateRolling() {
@@ -280,6 +322,7 @@ if (
           this.position.x = previousX
           this.isRolling = false;
           this.rollVelocity = this.lastDirection === 'left' ? -16 : 16;
+          this.canRoll = true;
         }
       }
     }
