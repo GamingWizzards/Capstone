@@ -140,6 +140,20 @@ const player = new Player({
   },
 })
 
+let blocks = [
+  new CollisionBlock({ position: { x: 100, y: 100 } }),
+  new CollisionBlock({ position: { x: 200, y: 200 } }),
+  // Add more blocks as needed
+];
+
+
+let enemies = [
+  new Enemy('./img/Ninja/enemy/Bug/idlemove/Bug Enemy_Animation 1_4.png', './img/Ninja/enemy/Bug/idlemove/Bug Enemy_Animation 1_4_Right.png',canvas.width, canvas.height, blocks),
+  
+  
+  // Add more enemies as needed
+];
+
 const camera = new window.Camera(player, { width: canvas.width, height: canvas.height })
 
 let level = 1;
@@ -211,6 +225,7 @@ const overlay = {
 
 function animate() {
   window.requestAnimationFrame(animate)
+  
 
   // Update camera here, before you start drawing.
   camera.update()
@@ -234,6 +249,12 @@ function animate() {
   // doors.forEach((door) => {
   //   door.draw()
   // })
+
+  for (let enemy of enemies) {
+    enemy.update(player.position);
+    enemy.draw(c);
+  }
+  
 
   player.handleInput(keys)
   player.draw()
