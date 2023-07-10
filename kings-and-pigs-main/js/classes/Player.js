@@ -42,12 +42,12 @@ class Player extends Sprite {
     // this is the blue box
     //c.fillStyle = 'rgba(0, 0, 255, 0.5)'
     //c.fillRect(this.position.x, this.position.y, this.width, this.height)
-   // c.fillRect(
-     // this.hitbox.position.x,
-      //this.hitbox.position.y,
-     // this.hitbox.width,
-     // this.hitbox.height
-   // )
+    // c.fillRect(
+    // this.hitbox.position.x,
+    //this.hitbox.position.y,
+    // this.hitbox.width,
+    // this.hitbox.height
+    // )
     this.checkForVerticalCollisions()
     this.updateRolling()
     this.updateDashing()
@@ -128,7 +128,7 @@ class Player extends Sprite {
       if (this.lastDirection === 'right') this.switchSprite('rollRight');
     }
 
-  // Wall Slide left/right
+    // Wall Slide left/right
     if (
       (keys.a.pressed &&
         this.position.x !== 0 &&
@@ -148,36 +148,41 @@ class Player extends Sprite {
       this.velocity.y = 1; // Adjust the sliding speed as needed
       this.switchSprite('wallSlideRight');
     }
-// Wall Jump
-if (
-  (checkKeyPressed('a') || checkKeyPressed('d')) &&
-  checkKeyPressed(' ') &&
-  !this.checkForFloorCollision() &&
-  this.velocity.y >= 1
-) {
-  console.log('Wall jump!');
+    // Wall Jump
+    if (
+      (checkKeyPressed('a') || checkKeyPressed('d')) &&
+      checkKeyPressed(' ') &&
+      !this.checkForFloorCollision() &&
+      this.velocity.y >= 1
+    ) {
+      console.log('Wall jump!');
 
-  const wallJumpForce = 8; // Adjust the jump force to control the distance
-  const oppositeDirection = this.lastDirection === 'left' ? 'right' : 'left';
+      const wallJumpForce = 8; // Adjust the jump force to control the distance
+      const oppositeDirection = this.lastDirection === 'left' ? 'right' : 'left';
 
-  if (this.checkForWallCollision('left') && checkKeyPressed('d')) {
-    this.velocity.y = -20; // Adjust the jump height as needed
+      if (this.checkForWallCollision('left') && checkKeyPressed('d')) {
+        this.velocity.y = -20; // Adjust the jump height as needed
 
-    // Diagonal X-position change
-    const jumpXVelocity = 50; // Adjust the X-velocity to control the smoothness and distance
-    this.velocity.x = jumpXVelocity; // Set the initial horizontal jump velocity
+        // Diagonal X-position change
+        const jumpXVelocity = 50; // Adjust the X-velocity to control the smoothness and distance
+        this.velocity.x = jumpXVelocity; // Set the initial horizontal jump velocity
 
-    this.switchSprite(`jump${oppositeDirection.charAt(0).toUpperCase() + oppositeDirection.slice(1)}`); // Change the sprite animation accordingly
-  } else if (this.checkForWallCollision('right') && checkKeyPressed('a')) {
-    this.velocity.y = -20; // Adjust the jump height as needed
+        this.switchSprite(`jump${oppositeDirection.charAt(0).toUpperCase() + oppositeDirection.slice(1)}`); // Change the sprite animation accordingly
+      } else if (this.checkForWallCollision('right') && checkKeyPressed('a')) {
+        this.velocity.y = -20; // Adjust the jump height as needed
 
-    // Diagonal X-position change
-    const jumpXVelocity = -50; // Adjust the X-velocity to control the smoothness and distance
-    this.velocity.x = jumpXVelocity; // Set the initial horizontal jump velocity
+        // Diagonal X-position change
+        const jumpXVelocity = -50; // Adjust the X-velocity to control the smoothness and distance
+        this.velocity.x = jumpXVelocity; // Set the initial horizontal jump velocity
 
-    this.switchSprite(`jump${oppositeDirection.charAt(0).toUpperCase() + oppositeDirection.slice(1)}`); // Change the sprite animation accordingly
-  }
-}
+        this.switchSprite(`jump${oppositeDirection.charAt(0).toUpperCase() + oppositeDirection.slice(1)}`); // Change the sprite animation accordingly
+      }
+    }
+
+
+    // if (keys.w.pressed) {
+    //   handleDoorInteraction();
+    // }
 
 
 
@@ -269,20 +274,20 @@ if (
       // Add any additional logic or animations for the roll
     }
   }
-    updateRolling() {
-      if (this.isRolling) {
-        const previousX = this.position.x;
-  
-        this.position.x += this.rollVelocity;
-        this.rollVelocity *= 1 - this.rollDeceleration;
-  
-        if (Math.abs(this.rollVelocity) < 1) {
-          this.position.x = previousX
-          this.isRolling = false;
-          this.rollVelocity = this.lastDirection === 'left' ? -16 : 16;
-        }
+  updateRolling() {
+    if (this.isRolling) {
+      const previousX = this.position.x;
+
+      this.position.x += this.rollVelocity;
+      this.rollVelocity *= 1 - this.rollDeceleration;
+
+      if (Math.abs(this.rollVelocity) < 1) {
+        this.position.x = previousX
+        this.isRolling = false;
+        this.rollVelocity = this.lastDirection === 'left' ? -16 : 16;
       }
     }
+  }
   startDash() {
     if (!this.isDashing && !this.isRolling) { // Check if not already dashing or rolling
       this.isDashing = true;

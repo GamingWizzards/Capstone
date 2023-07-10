@@ -125,7 +125,6 @@ const player = new Player({
           opacity: 1,
           onComplete: () => {
             level++
-
             if (level === 4) level = 1
             levels[level].init()
             player.switchSprite('idleRight')
@@ -142,41 +141,162 @@ const player = new Player({
 
 const camera = new window.Camera(player, { width: canvas.width, height: canvas.height })
 
-let level = 1;
+
+let level = 3
 let levels = {
   1: {
     init: () => {
-      parsedCollisions = collisionsLevel1.parse2D();
-      collisionBlocks = parsedCollisions.createObjectsFrom2D();
-      player.collisionBlocks = collisionBlocks;
-      player.position.x = 750;
-      player.position.y = 230;
-      if (player.currentAnimation) player.currentAnimation.isActive = false;
+      parsedCollisions = collisionsLevel1.parse2D()
+      collisionBlocks = parsedCollisions.createObjectsFrom2D()
+      player.collisionBlocks = collisionBlocks
+      player.position.x = 222;
+      player.position.y = 530
+
+      if (player.currentAnimation) player.currentAnimation.isActive = false
+      background = new Sprite({
+        position: {
+          x: 0,
+          y: 0,
+        },
+        imageSrc: './img/TransitionRed.png',
+      })
+
+      doors = [
+        new Sprite({
+          position: {
+            x: 640,
+            y: 2048,
+          },
+          imageSrc: './img/doorOpen.png',
+          frameRate: 5,
+          frameBuffer: 5,
+          loop: false,
+          autoplay: false,
+          destinationMap: 2,
+        }),
+        new Sprite({
+          position: {
+            x: 4448,
+            y: 2068,
+          },
+          imageSrc: './img/doorOpen.png',
+          frameRate: 5,
+          frameBuffer: 5,
+          loop: false,
+          autoplay: false,
+          destinationMap: 3,
+        }),
+      ]
+    },
+  },
+  2: {
+    init: () => {
+      parsedCollisions = collisionsLevel2.parse2D()
+      collisionBlocks = parsedCollisions.createObjectsFrom2D()
+      player.collisionBlocks = collisionBlocks
+      player.position.x = 196
+      player.position.y = 2836
+
+      if (player.currentAnimation) player.currentAnimation.isActive = false
 
       background = new Sprite({
         position: {
           x: 0,
           y: 0,
         },
-        imageSrc: './img/transitionLvl.png',
-      });
+        imageSrc: './img/TransitionRed2.png',
+      })
 
-      // doors = [
-      //   new Sprite({
-      //     position: {
-      //       x: 176.0,
-      //       y: 335,
-      //     },
-      //     imageSrc: './img/doorOpen.png',
-      //     frameRate: 5,
-      //     frameBuffer: 5,
-      //     loop: false,
-      //     autoplay: false,
-      //   }),
-      // ]
+      doors = [
+        new Sprite({
+          position: {
+            x: 2724,
+            y: 2802,
+          },
+          imageSrc: './img/doorOpen.png',
+          frameRate: 5,
+          frameBuffer: 5,
+          loop: false,
+          autoplay: false,
+        }),
+      ]
+    },
+  },
+  3: {
+    init: () => {
+      parsedCollisions = collisionsLevel3.parse2D()
+      collisionBlocks = parsedCollisions.createObjectsFrom2D()
+      player.collisionBlocks = collisionBlocks
+      player.position.x = 250
+      player.position.y = 3844
+
+      if (player.currentAnimation) player.currentAnimation.isActive = false
+
+      background = new Sprite({
+        position: {
+          x: 0,
+          y: 0,
+        },
+        imageSrc: './img/RightSideMap.png',
+      })
+
+      doors = [
+        new Sprite({
+          position: {
+            x: 188,
+            y: 3968,
+          },
+          imageSrc: './img/doorOpen.png',
+          frameRate: 5,
+          frameBuffer: 5,
+          loop: false,
+          autoplay: false,
+          destinationMap: 2
+        }),
+        new Sprite({
+          position: {
+            x: 248,
+            y: 1016,
+          },
+          imageSrc: './img/doorOpen.png',
+          frameRate: 5,
+          frameBuffer: 5,
+          loop: false,
+          autoplay: false,
+          destinationMap: 1
+        }),
+        new Sprite({
+          position: {
+            x: 5144,
+            y: 1532,
+          },
+          imageSrc: './img/doorOpen.png',
+          frameRate: 5,
+          frameBuffer: 5,
+          loop: false,
+          autoplay: false,
+          destinationMap: 1
+        }),
+        new Sprite({
+          position: {
+            x: 7208,
+            y: 3000,
+          },
+          imageSrc: './img/doorOpen.png',
+          frameRate: 5,
+          frameBuffer: 5,
+          loop: false,
+          autoplay: false,
+          destinationMap: 1
+        }),
+      ]
+
     },
   },
 }
+
+
+
 
 const keys = {
   // w: {
@@ -205,6 +325,28 @@ const keys = {
   }
 }
 
+// function transitionToMap(destinationMap) {
+//   // Update the current level or perform any other necessary actions based on the destination map
+//   switch (destinationMap) {
+//     case 'TransitionRed.png':
+//       level = 1;
+//       levels[level].init();
+//       break;
+//     case 'TransitionRed2.png':
+//       level = 2;
+//       levels[level].init();
+//       break;
+//     case 'RightSideMap.png':
+//       level = 3;
+//       levels[level].init();
+//       break;
+//     default:
+//       // Handle unknown destination maps
+//       break;
+//   }
+//   // Additional transition logic, if needed
+// }
+
 const overlay = {
   opacity: 0,
 }
@@ -231,9 +373,9 @@ function animate() {
   // collisionBlock.draw()
   // })
 
-  // doors.forEach((door) => {
-  //   door.draw()
-  // })
+  doors.forEach((door) => {
+    door.draw()
+  })
 
   player.handleInput(keys)
   player.draw()
