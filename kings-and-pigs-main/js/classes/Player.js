@@ -1,5 +1,5 @@
 class Player extends Sprite {
-  constructor({ collisionBlocks = [],lethalBlocks = [], imageSrc, frameRate, animations, loop }) {
+  constructor({ collisionBlocks = [], imageSrc, frameRate, animations, loop }) {
     super({ imageSrc, frameRate, animations, loop })
     this.position = {
       x: 200,
@@ -27,16 +27,32 @@ class Player extends Sprite {
     this.isDashing = false;
     this.dashDeceleration = 0.1;
 
-    this.lethalBlocks = lethalBlocks;
+ 
 
   }
-
+  checkCollisionWithLethalBlocks() {
+    const isCollidingWithLethalBlock = this.collisionBlocks.some(collisionBlock => {
+      return (
+        this.hitbox.position.x <= collisionBlock.position.x + collisionBlock.width &&
+        this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x &&
+        this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y &&
+        this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height &&
+        collisionBlock.isLethal
+      );
+    });
+  
+    if (isCollidingWithLethalBlock) {
+      console.log("Colliding with a lethal block!");
+      this.handleDeath();
+    }
+  }
+  
 handleDeath() {
   // Perform any actions or animations related to the player's death
   console.log("Colliding with a lethal block!");
   // Reset the player's position or any other necessary game state
   this.position.x = 200;
-  this.position.y = 200;
+  this.position.y = 3750;
 
   // You can also reset other variables, such as health or power-ups
 
@@ -66,6 +82,8 @@ handleDeath() {
     this.checkForVerticalCollisions()
     this.updateRolling()
     this.updateDashing()
+    this.checkForVerticalCollisions();
+    this.checkCollisionWithLethalBlocks()
   }
 
   handleInput(keys) {
@@ -383,21 +401,7 @@ if (
   // up and down
   
   checkForVerticalCollisions() {
-    const isCollidingWithLethalBlock = this.collisionBlocks.some(collisionBlock => {
-      return (
-        this.hitbox.position.x <= collisionBlock.position.x + collisionBlock.width &&
-        this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x &&
-        this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y &&
-        this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height &&
-        collisionBlock.isLethal // Add a property to collision blocks to indicate if it's a lethal block
-      );
-    });
-  
-    if (isCollidingWithLethalBlock) {
-      console.log("Colliding with a lethal block!");
-      this.handleDeath();
-      return;
-    }
+    let isCollidingWithLethalBlock = false;
   
     for (let i = 0; i < this.collisionBlocks.length; i++) {
       const collisionBlock = this.collisionBlocks[i];
@@ -408,23 +412,30 @@ if (
         this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y &&
         this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height
       ) {
-        if (this.velocity.y < 0) {
-          this.velocity.y = 0;
-          const offset = this.hitbox.position.y - this.position.y;
-          this.position.y = collisionBlock.position.y + collisionBlock.height - offset + 0.01;
-          break;
-        }
+        if (collisionBlock.isLethal) {
+          isCollidingWithLethalBlock = true;
+        } else {
+          if (this.velocity.y < 0) {
+            this.velocity.y = 0;
+            const offset = this.hitbox.position.y - this.position.y;
+            this.position.y = collisionBlock.position.y + collisionBlock.height - offset + 0.01;
+            break;
+          }
   
-        if (this.velocity.y > 0) {
-          this.velocity.y = 0;
-          const offset = this.hitbox.position.y - this.position.y + this.hitbox.height;
-          this.position.y = collisionBlock.position.y - offset - 0.01;
-          break;
+          if (this.velocity.y > 0) {
+            this.velocity.y = 0;
+            const offset = this.hitbox.position.y - this.position.y + this.hitbox.height;
+            this.position.y = collisionBlock.position.y - offset - 0.01;
+            break;
+          }
         }
       }
     }
+  
+    if (isCollidingWithLethalBlock) {
+      console.log("Colliding with a lethal block!");
+      this.handleDeath();
+    }
   }
   
-  
-
-}
+}  
