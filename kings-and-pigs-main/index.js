@@ -145,8 +145,8 @@ const player = new Player({
 function GameCheckpoint(x, y) {
   this.x = x;
   this.y = y;
-  this.width = 64; // adjust as needed
-  this.height = 64; // adjust as needed
+  this.width = 128; // adjust as needed
+  this.height = 128; // adjust as needed
   this.draw = function(context) {
     context.fillStyle = 'blue';
     context.fillRect(this.x, this.y, this.width, this.height);
@@ -154,28 +154,46 @@ function GameCheckpoint(x, y) {
 }
 
 let checkpoints = [
-  new GameCheckpoint(568, 3900),
-  new GameCheckpoint(1361.94, 2083.52), // Adjust positions as needed
-  new GameCheckpoint(2352.58, 1819.88), // Adjust positions as needed
+  new GameCheckpoint(568, 3900), //spawn
+  
+
+  new GameCheckpoint(2688, 3600), //start green
+  new GameCheckpoint(5060, 3780), //green 1
+  new GameCheckpoint(5244, 4400), //green 2
+  new GameCheckpoint(5696, 2700), //green 3
+
+  new GameCheckpoint(1064, 2910), //start purple 
+  new GameCheckpoint(1361.94, 2083.52), //purple 1
+  new GameCheckpoint(2352.58, 1819.88), //purple 2
   // Add more as needed...
 ];
 
-function respawnPlayer() {
-  player.position.x = currentCheckpoint.x;
-  player.position.y = currentCheckpoint.y;
-}
+let lastCheckpoint = checkpoints[0]
 
 function updateCheckpoints() {
-  for(let i = 0; i < checkpoints.length; i++) {
+  for (let i = 0; i < checkpoints.length; i++) {
     let checkpoint = checkpoints[i];
 
-    // Check for collision with player. Adjust as needed for your collision detection method.
-    // Assumes checkpoint to be a point, not a rectangle
-    if(player.position.x === checkpoint.x && player.position.y === checkpoint.y) {
-      // The player has hit this checkpoint. Update the current checkpoint.
-      currentCheckpoint = checkpoint;
+    // Check if the player has passed through the checkpoint
+    if (
+      player.position.x > checkpoint.x &&
+      player.position.x < checkpoint.x + checkpoint.width &&
+      player.position.y > checkpoint.y &&
+      player.position.y < checkpoint.y + checkpoint.height
+    ) {
+      // Update the lastCheckpoint
+      lastCheckpoint = checkpoint;
+      // console.log("Checkpoint updated to:", checkpoint);
+      console.log("Checkpoint updated to:");
     }
   }
+}
+
+function respawnPlayer() {
+  // console.log("Resetting checkpoint...");
+  player.position.x = lastCheckpoint.x;
+  player.position.y = lastCheckpoint.y;
+  // console.log("Checkpoint has been reset!");
 }
 
 
@@ -193,6 +211,8 @@ let levels = {
       player.collisionBlocks = collisionBlocks;
       player.position.x = 250;
       player.position.y = 3844;
+      // player.position.x = 250;
+      // player.position.y = 3844;
       if (player.currentAnimation) player.currentAnimation.isActive = false;
 
       background = new Sprite({
@@ -200,7 +220,7 @@ let levels = {
           x: 0,
           y: 0,
         },
-        imageSrc: './img/RightSideMapDetailed.png',
+        imageSrc: './img/AmissasEchoMap.png',
       });
 
       doors = [
@@ -316,12 +336,13 @@ function animate() {
     door.draw()
   })
 
+  
+  updateCheckpoints();
+
   for(let i = 0; i < checkpoints.length; i++) {
     checkpoints[i].draw(c);
   }
-
-  updateCheckpoints();
-
+  
   player.handleInput(keys)
   player.draw()
   player.update()
