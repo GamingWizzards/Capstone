@@ -153,6 +153,12 @@ let levels = {
       player.collisionBlocks = collisionBlocks;
       player.position.x = 250;
       player.position.y = 3844;
+
+      player.setRespawnPoint({ x: 568, y: 3844 });
+      player.setRespawnPoint({ x: 1976, y: 2972 });
+      player.setRespawnPoint({ x: 244, y: 2156 });
+      player.setRespawnPoint({ x: 2324, y: 1828 });
+
       if (player.currentAnimation) player.currentAnimation.isActive = false;
 
       background = new Sprite({

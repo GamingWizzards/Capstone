@@ -1,22 +1,22 @@
 class Player extends Sprite {
   constructor({ collisionBlocks = [], imageSrc, frameRate, animations, loop }) {
-    super({ imageSrc, frameRate, animations, loop })
+    super({ imageSrc, frameRate, animations, loop });
     this.position = {
       x: 200,
       y: 200,
-    }
+    };
 
     this.velocity = {
       x: 0,
       y: 0,
-    }
+    };
 
     this.sides = {
       bottom: this.position.y + this.height,
-    }
-    this.gravity = 1
+    };
+    this.gravity = 1;
 
-    this.collisionBlocks = collisionBlocks
+    this.collisionBlocks = collisionBlocks;
     this.lethalBlocks = lethalBlocks;
 
     this.isRolling = false;
@@ -27,37 +27,104 @@ class Player extends Sprite {
     this.isDashing = false;
     this.dashDeceleration = 0.1;
 
- 
-
+    this.respawnPoints = []; // Array to store the respawn points
+    this.currentRespawnPoint = null; // Variable to store the current respawn point
+    this.checkpointCollisionBlocks = [];
   }
+
   checkCollisionWithLethalBlocks() {
-    const isCollidingWithLethalBlock = this.collisionBlocks.some(collisionBlock => {
-      return (
-        this.hitbox.position.x <= collisionBlock.position.x + collisionBlock.width &&
-        this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x &&
-        this.hitbox.position.y + this.hitbox.height >= collisionBlock.position.y &&
-        this.hitbox.position.y <= collisionBlock.position.y + collisionBlock.height &&
-        collisionBlock.isLethal
-      );
-    });
-  
+    const isCollidingWithLethalBlock = this.collisionBlocks.some(
+      (collisionBlock) => {
+        return (
+          this.hitbox.position.x <=
+            collisionBlock.position.x + collisionBlock.width &&
+          this.hitbox.position.x + this.hitbox.width >= collisionBlock.position.x &&
+          this.hitbox.position.y + this.hitbox.height >=
+            collisionBlock.position.y &&
+          this.hitbox.position.y <=
+            collisionBlock.position.y + collisionBlock.height &&
+          collisionBlock.isLethal
+        );
+      }
+    );
+
     if (isCollidingWithLethalBlock) {
       console.log("Colliding with a lethal block!");
       this.handleDeath();
     }
   }
-  
-handleDeath() {
-  // Perform any actions or animations related to the player's death
-  console.log("Colliding with a lethal block!");
-  // Reset the player's position or any other necessary game state
-  this.position.x = 200;
-  this.position.y = 3750;
 
-  // You can also reset other variables, such as health or power-ups
+  setRespawnPoint(position) {
+    const checkpointCollided = this.checkpointCollisionBlocks.some(
+      (collisionBlock) => {
+        return (
+          this.hitbox.position.x <=
+            collisionBlock.position.x + collisionBlock.width &&
+          this.hitbox.position.x + this.hitbox.width >=
+            collisionBlock.position.x &&
+          this.hitbox.position.y + this.hitbox.height >=
+            collisionBlock.position.y &&
+          this.hitbox.position.y <=
+            collisionBlock.position.y + collisionBlock.height
+        );
+      }
+    );
 
-  // Restart the level or perform any necessary game over logic
-}
+    if (checkpointCollided) {
+      this.currentRespawnPoint = position; // Set the current respawn point to the provided position
+      this.respawnPoints.push(position); // Add the position to the respawnPoints array
+      console.log("Checkpoint reached! Respawn point set at:", position);
+    } else {
+      console.log("Checkpoint not reached. Respawn point not set.");
+    }
+  }
+
+  handleDeath() {
+    // Perform any actions or animations related to the player's death
+    console.log("Colliding with a lethal block!");
+
+    // Play the death animation
+
+    // this.switchSprite('death');
+
+    // Delay before respawning the player (in milliseconds)
+    // const respawnDelay = 500; // Adjust the delay time as needed
+
+    // Get the most recent respawn point
+    if (this.currentRespawnPoint) {
+      // If a checkpoint was reached, respawn at the current respawn point
+      this.position.x = this.currentRespawnPoint.x;
+      this.position.y = this.currentRespawnPoint.y;
+    } else if (this.respawnPoints.length > 0) {
+      // If no checkpoint was reached but there are previous respawn points,
+      // respawn at the most recent respawn point
+      const respawnPosition = this.respawnPoints[this.respawnPoints.length - 1];
+      this.position.x = respawnPosition.x;
+      this.position.y = respawnPosition.y;
+    } else {
+      // If no checkpoint was reached and no previous respawn points exist,
+      // set a default respawn position
+      this.position.x = 200;
+      this.position.y = 3750;
+    }
+    // Delayed respawn logic
+    // setTimeout(() => {
+    //   // Reset the player's position or any other necessary game state
+    //   this.position.x = respawnPosition.x;
+    //   this.position.y = respawnPosition.y;
+
+    //   // You can also reset other variables, such as health or power-ups
+
+    //   // Restart the level or perform any necessary game over logic
+    //   // Example: restartLevel();
+    // }, respawnDelay);
+  }
+
+
+  // ...existing code...
+
+
+
 
   update() {
 
@@ -71,14 +138,15 @@ handleDeath() {
 
     this.updateHitbox()
     // this is the blue box
-    //c.fillStyle = 'rgba(0, 0, 255, 0.5)'
-    //c.fillRect(this.position.x, this.position.y, this.width, this.height)
-   // c.fillRect(
-     // this.hitbox.position.x,
-      //this.hitbox.position.y,
-     // this.hitbox.width,
-     // this.hitbox.height
-   // )
+
+    //  c.fillStyle = 'rgba(0, 0, 255, 0.5)'
+    // c.fillRect(this.position.x, this.position.y, this.width, this.height)
+   c.fillRect(
+     this.hitbox.position.x,
+      this.hitbox.position.y,
+     this.hitbox.width,
+     this.hitbox.height
+   )
     this.checkForVerticalCollisions()
     this.updateRolling()
     this.updateDashing()
