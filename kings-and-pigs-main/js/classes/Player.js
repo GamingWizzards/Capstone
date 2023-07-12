@@ -47,17 +47,19 @@ class Player extends Sprite {
     }
   }
   
-handleDeath() {
-  // Perform any actions or animations related to the player's death
-  console.log("Colliding with a lethal block!");
-  // Reset the player's position or any other necessary game state
-  this.position.x = 200;
-  this.position.y = 3750;
+  handleDeath() {
+    // Perform any actions or animations related to the player's death
+    console.log("Colliding with a lethal block!");
 
-  // You can also reset other variables, such as health or power-ups
+    // Respawn the player at the current checkpoint
+    respawnPlayer();
 
-  // Restart the level or perform any necessary game over logic
-}
+    // You can also reset other variables, such as health or power-ups
+
+    // Restart the level or perform any necessary game over logic
+  }
+
+
 
   update() {
 

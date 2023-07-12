@@ -142,19 +142,45 @@ const player = new Player({
   },
 })
 
-let blocks = [
-  new CollisionBlock({ position: { x: 100, y: 100 } }),
-  new CollisionBlock({ position: { x: 200, y: 200 } }),
-  // Add more blocks as needed
+function GameCheckpoint(x, y) {
+  this.x = x;
+  this.y = y;
+  this.width = 64; // adjust as needed
+  this.height = 64; // adjust as needed
+  this.draw = function(context) {
+    context.fillStyle = 'blue';
+    context.fillRect(this.x, this.y, this.width, this.height);
+  }
+}
+
+let checkpoints = [
+  new GameCheckpoint(568, 3900),
+  new GameCheckpoint(1361.94, 2083.52), // Adjust positions as needed
+  new GameCheckpoint(2352.58, 1819.88), // Adjust positions as needed
+  // Add more as needed...
 ];
 
+function respawnPlayer() {
+  player.position.x = currentCheckpoint.x;
+  player.position.y = currentCheckpoint.y;
+}
 
-let enemies = [
-  new Enemy('./img/Ninja/enemy/Bug/idlemove/Bug Enemy_Animation 1_4.png', './img/Ninja/enemy/Bug/idlemove/Bug Enemy_Animation 1_4_Right.png',canvas.width, canvas.height, blocks),
-  
-  
-  // Add more enemies as needed
-];
+function updateCheckpoints() {
+  for(let i = 0; i < checkpoints.length; i++) {
+    let checkpoint = checkpoints[i];
+
+    // Check for collision with player. Adjust as needed for your collision detection method.
+    // Assumes checkpoint to be a point, not a rectangle
+    if(player.position.x === checkpoint.x && player.position.y === checkpoint.y) {
+      // The player has hit this checkpoint. Update the current checkpoint.
+      currentCheckpoint = checkpoint;
+    }
+  }
+}
+
+
+
+let currentCheckpoint = checkpoints[0]
 
 const camera = new window.Camera(player, { width: canvas.width, height: canvas.height })
 
@@ -262,6 +288,7 @@ const overlay = {
   opacity: 0,
 }
 
+
 function animate() {
   window.requestAnimationFrame(animate)
   
@@ -289,11 +316,11 @@ function animate() {
     door.draw()
   })
 
-  for (let enemy of enemies) {
-    enemy.update(player.position);
-    enemy.draw(c);
+  for(let i = 0; i < checkpoints.length; i++) {
+    checkpoints[i].draw(c);
   }
-  
+
+  updateCheckpoints();
 
   player.handleInput(keys)
   player.draw()
