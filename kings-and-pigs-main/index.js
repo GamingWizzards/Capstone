@@ -162,7 +162,7 @@ let level = 1;
 let levels = {
   1: {
     init: () => {
-      parsedCollisions = collisionsLevel2.parse2D();
+      parsedCollisions = collisionsLethalLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
       player.collisionBlocks = collisionBlocks;
       player.position.x = 250;

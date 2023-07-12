@@ -1,8 +1,10 @@
 class CollisionBlock {
-  constructor({ position }) {
+  constructor({ position, symbol, isLethal }) {
     this.position = position
     this.width = 64
     this.height = 64
+    this.symbol=symbol;
+    this.isLethal= isLethal;
   }
 
   draw() {
