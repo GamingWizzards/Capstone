@@ -180,12 +180,61 @@ class Player extends Sprite {
     }
 
 
-    // if (keys.w.pressed) {
-    //   handleDoorInteraction();
-    // }
+    if (keys.w.pressed) {
+      handleDoorInteraction();
+    }
 
 
 
+  }
+
+  handleDoorInteraction() {
+    const { door, destinationLevel } = this.detectCollidedDoor();
+
+    if (door) {
+      this.level = destinationLevel; // Update the player's level property
+      levels[this.level].init(); // Initialize the new level
+      console.log(`Entered door to level ${this.level}`);
+    }
+  }
+
+
+
+  detectCollidedDoor() {
+    for (let i = 0; i < doors.length; i++) {
+      const door = doors[i];
+      if (
+        this.hitbox.position.x + this.hitbox.width >= door.position.x &&
+        this.hitbox.position.x <= door.position.x + door.width &&
+        this.hitbox.position.y + this.hitbox.height >= door.position.y &&
+        this.hitbox.position.y <= door.position.y + door.height
+      ) {
+        return { door, destinationLevel: door.destinationLevel };
+      }
+    }
+
+    return null;
+  }
+
+  transitionToMap(destinationLevel) {
+    // Update the current level or perform any other necessary actions based on the destination map
+    switch (destinationLevel) {
+      case 2:
+        level = 2;
+        levels[level].init();
+        break;
+      case 3:
+        level = 3;
+        levels[level].init();
+        break;
+      default:
+        // Handle unknown destination maps or fallback to level 1
+        level = 1;
+        levels[level].init();
+        break;
+    }
+
+    // Additional transition logic, if needed
   }
 
   checkForFloorCollision() {
@@ -248,20 +297,6 @@ class Player extends Sprite {
         break;
       }
     }
-
-    /* if (wallCollisionDetected) {
-       this.velocity.y = 0;
-       this.canJump = true; // Allow jumping again
-       keys.w.pressed = false; // Reset the 'w' key press state to allow jumping again
-     }*/
-    //  if (
-    //   wallHitbox.position.y + wallHitbox.height >= this.position.y &&
-    //   wallHitbox.position.y <= this.position.y + this.height &&
-    //   wallHitbox.position.x <= this.position.x + this.width &&
-    //   wallHitbox.position.x + wallHitbox.width >= this.position.x
-    // ) {
-    //   wallCollisionDetected = true;
-    // }
 
     return wallCollisionDetected;
   }
