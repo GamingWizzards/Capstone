@@ -26,10 +26,27 @@ class Player extends Sprite {
     this.initialX = this.position.x;
     this.isDashing = false;
     this.dashDeceleration = 0.1;
-
+    this.portalAnimationFinished = false;
  
 
   }
+
+  updateAnimation() {
+    this.currentFrame++;
+  
+    if (this.currentFrame >= this.frameBuffer.length) {
+      if (this.currentAnimation === this.animations.portal) {
+        this.portalAnimationFinished = true;
+      }
+  
+      if (this.loop) {
+        this.currentFrame = 0;
+      } else {
+        this.currentFrame = this.frameBuffer.length - 1;
+      }
+    }
+  }
+
   checkCollisionWithLethalBlocks() {
     const isCollidingWithLethalBlock = this.collisionBlocks.some(collisionBlock => {
       return (
@@ -47,17 +64,27 @@ class Player extends Sprite {
     }
   }
   
-handleDeath() {
-  // Perform any actions or animations related to the player's death
-  console.log("Colliding with a lethal block!");
-  // Reset the player's position or any other necessary game state
-  this.position.x = 200;
-  this.position.y = 3750;
+  handleDeath() {
+    // Perform any actions or animations related to the player's death
+    console.log("Handle Death");
+    // Reset the player's position or any other necessary game state
+    this.position.x = 200;
+    this.position.y = 3750;
 
-  // You can also reset other variables, such as health or power-ups
+    this.switchSprite('portal');
+    this.loop = false; // Set loop to false to play only one loop
+  
+    setTimeout(() => {
+      // After playing one loop of the portal sprite, switch back to the idleRight sprite
+      this.switchSprite('idleRight');
+      this.loop = true; // Set loop back to true for the idleRight animation
+      this.portalAnimationFinished = false; // Reset the portal animation flag
+    }, this.animations.portal.frameRate * this.animations.portal.frameBuffer.length);
+  
 
-  // Restart the level or perform any necessary game over logic
-}
+  
+
+  }
 
   update() {
 
@@ -71,19 +98,23 @@ handleDeath() {
 
     this.updateHitbox()
     // this is the blue box
-    //c.fillStyle = 'rgba(0, 0, 255, 0.5)'
-    //c.fillRect(this.position.x, this.position.y, this.width, this.height)
-   // c.fillRect(
-     // this.hitbox.position.x,
-      //this.hitbox.position.y,
-     // this.hitbox.width,
-     // this.hitbox.height
-   // )
+  //   c.fillStyle = 'rgba(0, 0, 255, 0.5)'
+  //   c.fillRect(this.position.x, this.position.y, this.width, this.height)
+  //  c.fillRect(
+  //    this.hitbox.position.x,
+  //     this.hitbox.position.y,
+  //    this.hitbox.width,
+  //    this.hitbox.height
+  //  )
     this.checkForVerticalCollisions()
     this.updateRolling()
     this.updateDashing()
     this.checkForVerticalCollisions();
-    this.checkCollisionWithLethalBlocks()
+    this.checkCollisionWithLethalBlocks();
+
+    if (this.portalAnimationFinished) {
+      this.handleDeath();
+    }
   }
 
   handleInput(keys) {
@@ -104,7 +135,7 @@ handleDeath() {
 
     //Idle left/right
     else {
-      if (this.lastDirection === 'left') this.switchSprite('idleLeft')
+      if (this.lastDirection === 'left') this.switchSprite('portal')
       else this.switchSprite('idleRight')
     }
 
@@ -433,7 +464,7 @@ if (
     }
   
     if (isCollidingWithLethalBlock) {
-      console.log("Colliding with a lethal block!");
+      console.log("Check for vertical collision");
       this.handleDeath();
     }
   }

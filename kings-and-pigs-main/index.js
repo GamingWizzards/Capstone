@@ -7,8 +7,9 @@ canvas.height = 64 * 18 // 1152
 let parsedCollisions
 let collisionBlocks
 let background
-let doors
+let doors = []
 let lethalBlocks
+
 
 const player = new Player({
   imageSrc: './img/AssetPack/Light/idle_blink/idleRight.png',
@@ -19,9 +20,23 @@ const player = new Player({
       frameBuffer: 8,
       loop: true,
       imageSrc: './img/AssetPack/Light/idle_blink/idleRight.png',
-    },
+    }, 
+    portal: {
+  frameRate: 9,
+  frameBuffer: 9,
+  loop: true,
+  imageSrc: './img/PixelPortal/BluePortal.png',
+  width: 5,
+  height: 5,
+  // onComplete: () => {
+  //   // Perform actions after the death animation completes
+  //   // Respawn the player or perform any necessary game over logic
+  //   // Example: respawnPlayer();
+  //   player.playPortalAnimation();
+  // },
+},
     idleLeft: {
-      frameRate: 11,
+      frameRate: 11, 
       frameBuffer: 8,
       loop: true,
       imageSrc: './img/AssetPack/Light/idle_blink/idleLeft.png',
@@ -169,7 +184,7 @@ let levels = {
             x: 165,
             y: 3760,
           },
-          imageSrc: './img/teleporter.png',
+          imageSrc: './img/PixelPortal/BluePortal.png',
           frameRate: 12,
           frameBuffer: 20,
           loop: true,
@@ -253,6 +268,10 @@ function animate() {
 
   // Update camera here, before you start drawing.
   camera.update()
+
+  doors.forEach((door) => {
+    door.draw();
+  });
 
   // Clear the entire canvas
   c.clearRect(0, 0, canvas.width, canvas.height)
