@@ -11,19 +11,34 @@ Array.prototype.createObjectsFrom2D = function () {
   const objects = []
   this.forEach((row, y) => {
     row.forEach((symbol, x) => {
-      if (/*symbol === 292 ||*/ symbol === 258) {
-        // push a new collision into collisionblocks array
+      if (symbol === 5857) {
         objects.push(
           new CollisionBlock({
             position: {
               x: x * 64,
               y: y * 64,
             },
+            symbol: symbol,
+            isLethal: false,
           })
-        )
+        );
+      } else if (symbol === 5856) {
+        objects.push(
+          new CollisionBlock({
+            position: {
+              x: x * 64,
+              y: y * 64,
+            },
+            symbol: symbol,
+            isLethal: true,
+          })
+        );
       }
-    })
-  })
+      
+    });
+  });
+
+  
 
   return objects
 }

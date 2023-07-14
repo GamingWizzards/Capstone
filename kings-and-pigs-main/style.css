@@ -1,0 +1,113 @@
+body {
+  background: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+#smokey-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Dark background color */
+  z-index: -1; /* Place it behind other elements */
+  pointer-events: none; /* Ignore pointer events */
+  animation: smokey 10s infinite; /* Adjust the animation duration as needed */
+  content: "";
+}
+
+@keyframes smokey {
+  0% {
+    opacity: 0.1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.1);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 0.1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+}
+
+#checkpoint-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 48px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#start-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#menu-box {
+  background: rgba(255, 0, 0, 0.5); /* Red box with 50% opacity */
+  padding: 50px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px); /* Hazy effect */
+  width: 750px; /* Adjust the width as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.title {
+  color: white;
+  margin-bottom: 50px;
+  text-align: center;
+  font-size: 36px;
+}
+
+.menu-button {
+  display: block;
+  margin-bottom: 25px;
+  padding: 20px 40px;
+  background: rgba(255, 0, 0, 0.8); /* Red button with 80% opacity */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+  position: relative;
+}
+
+.button-image {
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  transform: translate(0, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.menu-button:hover {
+  background: rgba(255, 0, 0, 1); /* Red button with 100% opacity on hover */
+}
+
+.menu-button:hover .button-image {
+  opacity: 1;
+}
