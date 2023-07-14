@@ -380,8 +380,13 @@ function animate() {
 }
 
 startButton.addEventListener('click', () => {
+  startContainer.style.opacity = '0'; // Fade out the start container
+  setTimeout(() => {
+    startContainer.style.display = 'none'; // Hide the start container
+    gameContainer.classList.add('fade-in'); // Fade in the game container
+  }, 1000); // Adjust the delay (in milliseconds) to match the transition duration
   gameStarted = true;
-})
+});
 
 let gameStarted = false
 
