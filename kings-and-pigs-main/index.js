@@ -158,7 +158,7 @@ let levels = {
           x: 0,
           y: 0,
         },
-        imageSrc: './img/transitionLvl.png',
+        imageSrc: './img/TransitionRed.png',
       });
 
       // doors = [
