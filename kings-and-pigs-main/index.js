@@ -165,17 +165,19 @@ function GameCheckpoint(x, y, imageSrc) {
 }
 
 let checkpoints = [
-  new GameCheckpoint(568, 3900, './img/Lantern.png'), //spawn
+  new GameCheckpoint(498, 3880, './img/Lantern.png'), //spawn
   
 
-  new GameCheckpoint(2688, 3600, './img/Lantern.png'), //start green
+  new GameCheckpoint(2688, 3560, './img/Lantern.png'), //start green
   new GameCheckpoint(5060, 3780, './img/Lantern.png'), //green 1
   new GameCheckpoint(5244, 4400, './img/Lantern.png'), //green 2
   new GameCheckpoint(5696, 2700, './img/Lantern.png') ,//green 3
 
   new GameCheckpoint(1064, 2910, './img/Lantern.png'), //start purple 
-  new GameCheckpoint(1361.94, 2083.52, './img/Lantern.png'), //purple 1
-  new GameCheckpoint(2352.58, 1819.88, './img/Lantern.png') ,//purple 2
+  new GameCheckpoint(450, 2325, './img/Lantern.png'), //purple 1
+  new GameCheckpoint(1268, 2000, './img/Lantern.png'), //purple 2
+  new GameCheckpoint(1268, 1165, './img/Lantern.png'), //purple 3
+  new GameCheckpoint(2300, 1745, './img/Lantern.png') ,//purple 4
   // Add more as needed...
 ];
 
@@ -295,7 +297,7 @@ let levels = {
         new Sprite({
           position: {
             x: 5200,
-            y: 1208,
+            y: 1308,
           },
           imageSrc: './img/teleporter.png',
           frameRate: 12,
@@ -367,7 +369,7 @@ let levels = {
         new Sprite({
           position: {
             x: 5200,
-            y: 1208,
+            y: 1308,
           },
           imageSrc: './img/teleporter.png',
           frameRate: 12,
@@ -440,7 +442,7 @@ let levels = {
         new Sprite({
           position: {
             x: 5200,
-            y: 1208,
+            y: 1308,
           },
           imageSrc: './img/teleporter.png',
           frameRate: 12,
@@ -513,7 +515,7 @@ let levels = {
         new Sprite({
           position: {
             x: 5200,
-            y: 1208,
+            y: 1308,
           },
           imageSrc: './img/teleporter.png',
           frameRate: 12,

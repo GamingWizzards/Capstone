@@ -197,9 +197,9 @@ class Player extends Sprite {
       if (this.lastDirection === "left") this.switchSprite("jumpLeft");
       else this.switchSprite("jumpRight");
     }
-    if (keys.Spacebar.pressed && this.checkForFloorCollision()) {
-      jumpSound.play();
-    }
+    // if (keys.Spacebar.pressed && this.checkForFloorCollision()) {
+    //   jumpSound.play();
+    // }
 
     //Dash
 
