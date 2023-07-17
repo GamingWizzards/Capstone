@@ -1,3 +1,4 @@
+
 body {
   background: #333;
   display: flex;
@@ -110,4 +111,13 @@ body {
 
 .menu-button:hover .button-image {
   opacity: 1;
+}
+
+#deathCountDisplay{
+  position: absolute;
+  top: 700px;
+  left:1482.5px;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
 }
