@@ -5,8 +5,8 @@ const startContainer = document.getElementById('start-container');
 const gameContainer = document.getElementById('game-container');
 
 
-const audioContext = new (window.AudioContext || window.AudioContext)();
-const jumpSound = new Audio('./sounds/MYLK_vocal_huh_dry.wav');
+// const audioContext = new (window.AudioContext || window.AudioContext)();
+// const jumpSound = new Audio('./sounds/MYLK_vocal_huh_dry.wav');
 // const collisionSound = new Audio('./sounds/collision.wav');
 
 
@@ -137,7 +137,7 @@ const player = new Player({
           onComplete: () => {
             level++
 
-            if (level === 4) level = 1
+            if (level === 6) level = 1
             levels[level].init()
             player.switchSprite('idleRight')
             player.preventInput = false
@@ -226,6 +226,41 @@ let level = 1;
 let levels = {
   1: {
     init: () => {
+      parsedCollisions = collisionsLevel2.parse2D()
+      collisionBlocks = parsedCollisions.createObjectsFrom2D()
+      player.collisionBlocks = collisionBlocks
+      player.position.x = 1662.79
+      player.position.y = 2502.94
+
+      if (player.currentAnimation) player.currentAnimation.isActive = false
+
+      background = new Sprite({
+        position: {
+          x: 0,
+          y: 0,
+        },
+        imageSrc: './img/AmissaTutorialMap.png',
+      })
+
+      doors = [
+        new Sprite({
+          position: {
+            x: 7600,
+            y: 580,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+      ]
+      lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLevel2);
+      player.lethalBlocks = lethalBlocks; 
+    },
+  },
+  2: {
+    init: () => {
       parsedCollisions = collisionsLethalLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
       player.collisionBlocks = collisionBlocks;
@@ -244,10 +279,46 @@ let levels = {
       });
 
       doors = [
+        // new Sprite({
+        //   position: {
+        //     x: 165,
+        //     y: 3760,
+        //   },
+        //   imageSrc: './img/teleporter.png',
+        //   frameRate: 12,
+        //   frameBuffer: 20,
+        //   loop: true,
+        //   autoplay: false,
+        // }),
+        //orange
         new Sprite({
           position: {
-            x: 165,
-            y: 3760,
+            x: 5200,
+            y: 1208,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+        //purple
+        new Sprite({
+          position: {
+            x: 250,
+            y: 800,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+        //green
+        new Sprite({
+          position: {
+            x: 7200,
+            y: 2705,
           },
           imageSrc: './img/teleporter.png',
           frameRate: 12,
@@ -261,46 +332,233 @@ let levels = {
       //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
     },
   },
-  // 2: {
-  //   init: () => {
-  //     parsedCollisions = collisionsLevel2.parse2D()
-  //     collisionBlocks = parsedCollisions.createObjectsFrom2D()
-  //     player.collisionBlocks = collisionBlocks
-  //     player.position.x = 3
-  //     player.position.y = 61
+  3: {
+    init: () => {
+      parsedCollisions = collisionsLethalLevel1.parse2D();
+      collisionBlocks = parsedCollisions.createObjectsFrom2D();
+      player.collisionBlocks = collisionBlocks;
+      player.position.x = 250;
+      player.position.y = 3844;
+      // player.position.x = 250;
+      // player.position.y = 3844;
+      if (player.currentAnimation) player.currentAnimation.isActive = false;
 
-  //     if (player.currentAnimation) player.currentAnimation.isActive = false
+      background = new Sprite({
+        position: {
+          x: 0,
+          y: 0,
+        },
+        imageSrc: './img/AmissasEchoMap.png',
+      });
+      doors = [
+        // new Sprite({
+        //   position: {
+        //     x: 165,
+        //     y: 3760,
+        //   },
+        //   imageSrc: './img/teleporter.png',
+        //   frameRate: 12,
+        //   frameBuffer: 20,
+        //   loop: true,
+        //   autoplay: false,
+        // }),
+        //orange
+        new Sprite({
+          position: {
+            x: 5200,
+            y: 1208,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+        //purple
+        new Sprite({
+          position: {
+            x: 250,
+            y: 800,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+        //green
+        new Sprite({
+          position: {
+            x: 7200,
+            y: 2705,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+      ];
+      lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLethalLevel1);
+      player.lethalBlocks = lethalBlocks; 
+      //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
+    },
+  },
+  4: {
+    init: () => {
+      parsedCollisions = collisionsLethalLevel1.parse2D();
+      collisionBlocks = parsedCollisions.createObjectsFrom2D();
+      player.collisionBlocks = collisionBlocks;
+      player.position.x = 250;
+      player.position.y = 3844;
+      // player.position.x = 250;
+      // player.position.y = 3844;
+      if (player.currentAnimation) player.currentAnimation.isActive = false;
 
-  //     background = new Sprite({
-  //       position: {
-  //         x: 0,
-  //         y: 0,
-  //       },
-  //       imageSrc: './img/RightSideMapTest1.png',
-  //     })
+      background = new Sprite({
+        position: {
+          x: 0,
+          y: 0,
+        },
+        imageSrc: './img/AmissasEchoMap.png',
+      });
 
-  //     doors = [
-  //       new Sprite({
-  //         position: {
-  //           x: 772.0,
-  //           y: 336,
-  //         },
-  //         imageSrc: './img/doorOpen.png',
-  //         frameRate: 5,
-  //         frameBuffer: 5,
-  //         loop: false,
-  //         autoplay: false,
-  //       }),
-  //     ]
-  //   },
-  // },
+      doors = [
+        // new Sprite({
+        //   position: {
+        //     x: 165,
+        //     y: 3760,
+        //   },
+        //   imageSrc: './img/teleporter.png',
+        //   frameRate: 12,
+        //   frameBuffer: 20,
+        //   loop: true,
+        //   autoplay: false,
+        // }),
+        //orange
+        new Sprite({
+          position: {
+            x: 5200,
+            y: 1208,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+        //purple
+        new Sprite({
+          position: {
+            x: 250,
+            y: 800,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+        //green
+        new Sprite({
+          position: {
+            x: 7200,
+            y: 2705,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+      ];
+      lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLethalLevel1);
+      player.lethalBlocks = lethalBlocks; 
+      //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
+    },
+  },
+  5: {
+    init: () => {
+      parsedCollisions = collisionsLethalLevel1.parse2D();
+      collisionBlocks = parsedCollisions.createObjectsFrom2D();
+      player.collisionBlocks = collisionBlocks;
+      player.position.x = 250;
+      player.position.y = 3844;
+      // player.position.x = 250;
+      // player.position.y = 3844;
+      if (player.currentAnimation) player.currentAnimation.isActive = false;
+
+      background = new Sprite({
+        position: {
+          x: 0,
+          y: 0,
+        },
+        imageSrc: './img/AmissasEchoMap.png',
+      });
+
+      doors = [
+        // new Sprite({
+        //   position: {
+        //     x: 165,
+        //     y: 3760,
+        //   },
+        //   imageSrc: './img/teleporter.png',
+        //   frameRate: 12,
+        //   frameBuffer: 20,
+        //   loop: true,
+        //   autoplay: false,
+        // }),
+        //orange
+        new Sprite({
+          position: {
+            x: 5200,
+            y: 1208,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+        //purple
+        new Sprite({
+          position: {
+            x: 250,
+            y: 800,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+        //green
+        new Sprite({
+          position: {
+            x: 7200,
+            y: 2705,
+          },
+          imageSrc: './img/teleporter.png',
+          frameRate: 12,
+          frameBuffer: 20,
+          loop: true,
+          autoplay: false,
+        }),
+      ];
+      lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLethalLevel1);
+      player.lethalBlocks = lethalBlocks; 
+      //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
+    },
+  },
+
+
 
 }
 
 const keys = {
-  // w: {
-  //   pressed: false,
-  // },
+  w: {
+    pressed: false,
+  },
   a: {
     pressed: false,
   },
