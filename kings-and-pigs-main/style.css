@@ -118,7 +118,6 @@ body {
   /* background: rgba(255, 0, 0, 0.7); Red box with 50% opacity */
   padding: 50px;
   border-radius: 10px;
-  backdrop-filter: blur(10px); /* Hazy effect */
   width: 500px;
   display: flex;
   flex-direction: column;

@@ -3,6 +3,7 @@ const c = canvas.getContext('2d')
 const startButton = document.getElementById('start-button');
 const startContainer = document.getElementById('start-container');
 const gameContainer = document.getElementById('game-container');
+const backgroundAudio = document.getElementById('background-music-2')
 
 
 // const audioContext = new (window.AudioContext || window.AudioContext)();
@@ -649,9 +650,28 @@ startButton.addEventListener('click', () => {
     gameContainer.classList.add('fade-in'); // Fade in the game container
   }, 1000); // Adjust the delay (in milliseconds) to match the transition duration
   gameStarted = true;
+
+  if (gameStarted === true) {
+    playBackground('background-music-2', 0.1);
+  }
+
 });
 
 let gameStarted = false
 
+// function setVolume(audioId, volume) {
+//   const audio = document.getElementById(audioId);
+//   audio.volume = volume;
+// }
+
+function playBackground(audioId, volume) {
+  const audio = document.getElementById(audioId);
+  audio.volume = volume
+  audio.play();
+}
+
+
+
 levels[level].init()
 animate()
+
