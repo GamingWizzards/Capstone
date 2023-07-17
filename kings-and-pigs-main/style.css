@@ -176,6 +176,15 @@ body {
   opacity: 1;
 }
 
+#deathCountDisplay{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
 #game-container {
   opacity: 0;
   transition: opacity 1s ease; /* Adjust the duration as needed */
@@ -183,4 +192,15 @@ body {
 
 .fade-in {
   opacity: 1 !important;
+}
+
+#timerDisplay {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  left: 50%; 
+  transform: translateX(-50%);
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 24px; /* Adjust to your preference */
+  text-align: center;
 }

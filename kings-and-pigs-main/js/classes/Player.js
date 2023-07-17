@@ -40,9 +40,9 @@ class Player extends Sprite {
 
     this.deathCount = 0; // Initialize death count
 
-    this.createDeathCounter(); // Create the death counter element
+    // this.createDeathCounter(); // Create the death counter element
 
-    this.displayDeathCount(); // Display the initial death count
+    // this.displayDeathCount(); // Display the initial death count
   }
 
   checkCollisionWithLethalBlocks() {
