@@ -2,13 +2,29 @@
 <html>
 <head>
   <title>Amissa's Echo</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">]
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=VT323&display=swap" rel="stylesheet">
+
+
+  <audio id="background-music-1" loop>
+    <source src="/sounds/Birds_15.wav" type="audio/mpeg">
+  </audio>
+  <audio id="background-music-2" loop>
+    <source src="/sounds/AmissaEcho(Intense)_Master.wav" type="audio/mpeg">
+  </audio>
+
+
 </head>
 <body>
   <div id="start-container">
     <div id="menu-box">
-      <h1 class="title">Amissa's Echo</h1>
-      <button id="start-button" class="menu-button">Start New Game
+      <div id="logo-container">
+        <img src="./img/AmissaLogoBlackNRed.png" alt="Amissa's Echo Logo">
+        <!-- <h1 class="title">Amissa's Echo</h1> -->
+      </div>
+      <button id="start-button" class="menu-button">Start Game
         <img class="button-image" src="./img/AssetPack/Light/wall_grab/wall_grab5.png" alt="Image on Hover">
       </button>
       <button id="load-button" class="menu-button">Load Game
@@ -21,13 +37,29 @@
         <img class="button-image" src="./img/AssetPack/Light/wall_grab/wall_grab5.png" alt="Image on Hover">
       </button>
     </div>
+    <img class="background-video" src="./img/campfire2.gif">
+    <footer id="devs">
+      <h1 class="name-title">Developed by:</h1>
+      <div class="names">
+        <h3><a href="https://www.linkedin.com/in/matt-massey-6b5b53264/" target="_blank">Matt Massey</a> | </h3>
+        <h3><a href="" target="_blank">Ricky Colon</a> | </h3>
+        <h3><a href="https://www.linkedin.com/in/joseph-rodriguez-246803268/" target="_blank">Joe Rodriguez</a> | </h3>
+        <h3><a href="" target="_blank">Kelvin Benitez</a> | </h3>
+        <h3><a href="https://www.linkedin.com/in/skelly98/" target="_blank">Steven Kelly</a></h3>
+      </div>
+    </footer>
   </div>
   <div id="game-container">
     <div id="deathCountDisplay">Deaths: 0</div>
     <canvas></canvas>
     <div id="checkpoint-popup">Checkpoint Reached</div>
   </div>
-
+  
+  <!-- <footer class="social">
+    <button class="social-button facebook-button" onClick={handleFacebookClick}>Facebook</button>
+    <button class="social-button twitter-button" onClick={handleTwitterClick}>Twitter</button>
+    <button class="social-button instagram-button" onClick={handleInstagramClick}>Instagram</button>
+  </footer> -->
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"

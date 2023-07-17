@@ -5,6 +5,11 @@ const startContainer = document.getElementById('start-container');
 const gameContainer = document.getElementById('game-container');
 
 
+const audioContext = new (window.AudioContext || window.AudioContext)();
+const jumpSound = new Audio('./sounds/MYLK_vocal_huh_dry.wav');
+// const collisionSound = new Audio('./sounds/collision.wav');
+
+
 canvas.width = 64 * 32 // 2048
 canvas.height = 64 * 18 // 1152
 
@@ -593,8 +598,13 @@ function animate() {
 }
 
 startButton.addEventListener('click', () => {
+  startContainer.style.opacity = '0'; // Fade out the start container
+  setTimeout(() => {
+    startContainer.style.display = 'none'; // Hide the start container
+    gameContainer.classList.add('fade-in'); // Fade in the game container
+  }, 1000); // Adjust the delay (in milliseconds) to match the transition duration
   gameStarted = true;
-})
+});
 
 let gameStarted = false
 
