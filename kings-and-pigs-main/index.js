@@ -650,12 +650,12 @@ startButton.addEventListener('click', () => {
   setTimeout(() => {
     startContainer.style.display = 'none'; // Hide the start container
     gameContainer.classList.add('fade-in'); // Fade in the game container
+    gameStarted = true;
+  
+    if (gameStarted === true) {
+      playBackground('background-music-2', 0.1);
+    }
   }, 1000); // Adjust the delay (in milliseconds) to match the transition duration
-  gameStarted = true;
-
-  if (gameStarted === true) {
-    playBackground('background-music-2', 0.1);
-  }
 
 });
 
