@@ -1,3 +1,4 @@
+let enemies = [];
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 const startButton = document.getElementById('start-button');
@@ -234,6 +235,10 @@ let levels = {
       // player.position.x = 250;
       // player.position.y = 3844;
       if (player.currentAnimation) player.currentAnimation.isActive = false;
+           
+      // Spawn enemies at specific locations on the map
+           enemies.push(new Enemy(500, 100, 2, "./img/Ninja/enemy/Bug/idlemove/Bug Enemy_Animation 1_0.png")); 
+           enemies.push(new Enemy(1000, 300, 3, "./img/Ninja/enemy/Bug/idlemove/Bug Enemy_Animation 1_0.png"));
 
       background = new Sprite({
         position: {
@@ -363,6 +368,7 @@ function animate() {
   doors.forEach((door) => {
     door.draw()
   })
+  
 
   
   updateCheckpoints();
@@ -382,6 +388,12 @@ function animate() {
   c.restore()
 
   c.restore()
+
+  enemies.forEach((enemy) => {
+    enemy.update(player);
+    enemy.draw(c);
+    enemy.checkCollision(player);
+  });
 }
 
 startButton.addEventListener('click', () => {
