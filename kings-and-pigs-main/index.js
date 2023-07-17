@@ -260,6 +260,31 @@ let levels = {
       ]
       lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLevel2);
       player.lethalBlocks = lethalBlocks; 
+
+      // Bot setup (move the Bot class and initBot() inside this level's init)
+      class Bot {
+        constructor(x, y, imageSrc) {
+          this.x = x;
+          this.y = y;
+          this.width = 64; // Adjust as needed
+          this.height = 64; // Adjust as needed
+          this.image = new Image();
+          this.image.src = imageSrc;
+        }
+      
+        draw(context) {
+          context.drawImage(this.image, this.x, this.y, this.width, this.height);
+        }
+      }
+      
+      let bot;
+      
+      function initBot() {
+        bot = new Bot(2660.45, 2364.44, './img/Ninja/merchant/ninja merchant anim_Animation 1_09.png'); // Replace './img/bot.png' with the path to your bot's image
+      }
+
+      initBot(); // Call the initBot() inside the first level's init function
+
     },
   },
   2: {
@@ -590,6 +615,29 @@ const overlay = {
 }
 
 
+
+const messages = [
+  "Welcome to the game! Press Spacebar to continue.",
+  "This is the first message.",
+  "Here is the second message.",
+  "And this is the third message.",
+  "Press Spacebar to start the game.",
+];
+
+let currentMessageIndex = 0;
+let showMessage = true;
+
+function displayMessage() {
+  if (showMessage) {
+    c.fillStyle = "black";
+    c.fillRect(camera.offset.x, camera.offset.y, canvas.width, canvas.height);
+    c.fillStyle = "white";
+    c.font = "24px Arial";
+    c.textAlign = "center";
+    c.fillText(messages[currentMessageIndex], canvas.width / 2, canvas.height / 2);
+  }
+}
+
 function animate() {
   window.requestAnimationFrame(animate)
 
@@ -601,7 +649,7 @@ function animate() {
     gameContainer.style.display = 'none';
   }
   
-
+  bot.draw(c);
   // Update camera here, before you start drawing.
   camera.update()
 
@@ -623,6 +671,8 @@ function animate() {
 
   doors.forEach((door) => {
     door.draw()
+
+    displayMessage();
   })
 
   
@@ -673,7 +723,7 @@ function playBackground(audioId, volume) {
 }
 
 
-
+initBot();
 levels[level].init()
 animate()
 
