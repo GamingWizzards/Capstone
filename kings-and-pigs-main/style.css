@@ -179,14 +179,6 @@ body {
 
 #deathCountDisplay{
   position: absolute;
-<<<<<<< HEAD
-  top: 700px;
-  left:1482.5px;
-  color: white;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-}
-=======
   top: 0px;
   left: 0px;
   color: white;
@@ -213,4 +205,3 @@ body {
   font-size: 24px; /* Adjust to your preference */
   text-align: center;
 }
->>>>>>> 2d0ec8bce5ce793017cbe08d856ee1fc1b55acf4
