@@ -5,6 +5,8 @@ const startContainer = document.getElementById('start-container');
 const gameContainer = document.getElementById('game-container');
 const backgroundAudio1 = document.getElementById('background-music-1')
 const backgroundAudio2 = document.getElementById('background-music-2')
+const controlsButtons = document.getElementById('control-button');
+const controlsContainer = document.getElementById('control-Menu');
 
 
 // const audioContext = new (window.AudioContext || window.AudioContext)();
@@ -696,12 +698,20 @@ const overlay = {
 function animate() {
   window.requestAnimationFrame(animate)
 
-  if(gameStarted) {
-    startContainer.style.display = 'none';
-    gameContainer.style.display = 'block';
-  } else {
+  if(!gameStarted && !controlMenu){
     startContainer.style.display = 'block';
     gameContainer.style.display = 'none';
+    controlsContainer.style.display = 'none';
+  }
+  if(gameStarted){
+    startContainer.style.display = 'none';
+      gameContainer.style.display = 'block';
+      controlsContainer.style.display = 'none';
+  }
+  if(controlMenu){
+    startContainer.style.display = 'none';
+    gameContainer.style.display = 'none';
+    controlsContainer.style.display = 'block';
   }
   
 
@@ -757,6 +767,12 @@ function animate() {
 
 
 let gameStarted = false
+let controlMenu = false
+
+controlsButtons.addEventListener('click', () => {
+  controlMenu = true
+  controlsContainer.classList.remove('hidden');
+})
 
 
   levels[level].init()
@@ -775,3 +791,4 @@ let gameStarted = false
   });
 
 animate()
+

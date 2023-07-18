@@ -2,10 +2,11 @@
 <html>
 <head>
   <title>Amissa's Echo</title>
-  <link rel="stylesheet" href="style.css">]
+  <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=VT323&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="data:">
 
 
   <audio id="background-music-1" loop>
@@ -30,7 +31,7 @@
       <button id="load-button" class="menu-button">Load Game
         <img class="button-image" src="./img/AssetPack/Light/wall_grab/wall_grab5.png" alt="Image on Hover">
       </button>
-      <button id="settings-button" class="menu-button">Settings
+      <button id="control-button" class="menu-button">Control
         <img class="button-image" src="./img/AssetPack/Light/wall_grab/wall_grab5.png" alt="Image on Hover">
       </button>
       <button id="leader-board" class="menu-button">Leader Board
@@ -49,21 +50,122 @@
       </div>
     </footer>
   </div>
+
+  <div id ="control-Menu">
+    <style>
+      /* body {
+        background-image: url('./img/campfire2.gif');
+        background-repeat: no-repeat;
+        background-size: cover;
+      } */
+      .container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20px;
+    background-color: transparent;
+    padding: 20px;
+    margin: 20px;
+    position: relative;
+    margin-top: 250px; /* Adjusted margin-top value */
+    width: 100vw; /* Set the width to 100% of the viewport width */
+  }
+  .box {
+    position: relative;
+    border: 1px solid black;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%; 
+    margin: 0 auto; /* Center the buttons horizontally */
+  }
+      .box:hover {
+        background-color: #555;
+      }
+      .box:hover::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: -20px;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        background-image: url('./img/AssetPack/Light/wall_grab/wall_grab5.png');
+        background-size: cover;
+        z-index: -1;
+        animation: dashLoop 2s infinite;
+      }
+      @keyframes dashLoop {
+        0% { transform: translateY(-50%) rotate(0deg); }
+        100% { transform: translateY(-50%) rotate(360deg); }
+      }
+      .settings {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        color: white;
+        position: absolute;
+        top: -80px; /* Adjust the top value to move it higher */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%; /* Make the settings span the full width */
+      }
+      .return-button {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 18px;
+        color: white;
+        background: transparent;
+        padding: 10px;
+        cursor: pointer;
+      }
+    </style>
+  <body>
+    <img class="background-video" src="./img/campfire2.gif">
+    <a class="return-button" href="index.html">&lt; Return</a>
+    <div class="container">
+      <div class="settings"><b>Settings</b></div>
+      <div class="box" onclick="handleClick('click shift')">
+        Dash
+        <img class="dash" src="./img/AssetPack/Light/dash/dash0.png" alt="Dash">
+      </div>
+      <div class="box" onclick="handleClick('roll down the wall ')">
+        Wall-Slide
+        <img class="walljump" src="./img/AssetPack/Light/wall_slide/wall_slide0.png" alt="walljump">
+      </div>
+      <div class="box" onclick="handleClick('jump on the wall')">
+        Wall-Jump
+        <img class="Wall-grab" src="./img/AssetPack/Light/wall_grab/wall_grab5.png" alt="Wall-grab">
+      </div>
+      <div class="box" onclick="handleClick('click shift')">
+        Roll
+        <img class="Roll" src="./img/AssetPack/Light/roll/roll2.png
+        " alt="Roll">
+      </div>
+    </div>
+    <script>
+      function handleClick(letter) {
+        alert('Clicked: ' + letter);
+        // Perform any desired action here
+      }
+    </script>
+    </div>
+
   <div id="game-container">
     <div id="deathCountDisplay">Deaths: 0</div>
-<<<<<<< HEAD
-=======
     <div id="timerDisplay">Time: 0:00</div>
->>>>>>> 2d0ec8bce5ce793017cbe08d856ee1fc1b55acf4
     <canvas></canvas>
     <div id="checkpoint-popup">Checkpoint Reached</div>
   </div>
-  
-  <!-- <footer class="social">
-    <button class="social-button facebook-button" onClick={handleFacebookClick}>Facebook</button>
-    <button class="social-button twitter-button" onClick={handleTwitterClick}>Twitter</button>
-    <button class="social-button instagram-button" onClick={handleInstagramClick}>Instagram</button>
-  </footer> -->
+
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"
