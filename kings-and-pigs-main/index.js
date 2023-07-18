@@ -1,4 +1,3 @@
-let enemies = [];
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 const startButton = document.getElementById('start-button');
@@ -20,6 +19,7 @@ let collisionBlocks
 let background
 let doors
 let lethalBlocks
+let enemy;
 
 const player = new Player({
   imageSrc: './img/AssetPack/Light/idle_blink/idleRight.png',
@@ -182,6 +182,10 @@ let checkpoints = [
   // Add more as needed...
 ];
 
+// if (!enemy) {
+//   enemy = new Enemy(2664.28, 2368.27, './img/Ninja/merchant/ninja merchant anim_Animation 1_09.png')
+// }
+
 let lastCheckpoint = checkpoints[0]
 
 function updateCheckpoints() {
@@ -245,6 +249,7 @@ let levels = {
         },
         imageSrc: './img/AmissaTutorialMap.png',
       })
+  
 
       doors = [
         new Sprite({
@@ -261,6 +266,12 @@ let levels = {
       ]
       lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLevel2);
       player.lethalBlocks = lethalBlocks; 
+
+      if (!enemy) {
+        enemy = new Enemy(2664.28, 2368.27, './img/Ninja/merchant/ninja merchant anim_Animation 1_09.png')
+      }
+
+      
     },
   },
   2: {
@@ -274,9 +285,6 @@ let levels = {
       // player.position.y = 3844;
       if (player.currentAnimation) player.currentAnimation.isActive = false;
            
-      // Spawn enemies at specific locations on the map
-           enemies.push(new Enemy(500, 100, 2, "./img/Ninja/enemy/Bug/idlemove/Bug Enemy_Animation 1_0.png")); 
-           enemies.push(new Enemy(1000, 300, 3, "./img/Ninja/enemy/Bug/idlemove/Bug Enemy_Animation 1_0.png"));
 
       background = new Sprite({
         position: {
@@ -285,7 +293,6 @@ let levels = {
         },
         imageSrc: './img/AmissasEchoMap.png',
       });
-
       doors = [
         // new Sprite({
         //   position: {
@@ -630,7 +637,10 @@ function animate() {
     door.draw()
   })
   
-
+  
+  if (enemy) {
+    enemy.draw();
+  }
   
   updateCheckpoints();
 
@@ -649,12 +659,6 @@ function animate() {
   c.restore()
 
   c.restore()
-
-  enemies.forEach((enemy) => {
-    enemy.update(player);
-    enemy.draw(c);
-    enemy.checkCollision(player);
-  });
 }
 
 startButton.addEventListener('click', () => {
@@ -688,4 +692,3 @@ function playBackground(audioId, volume) {
 
 levels[level].init()
 animate()
-
