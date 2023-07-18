@@ -8,11 +8,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=VT323&display=swap" rel="stylesheet">
 
 
-  <audio id="background-music-1" loop>
-    <source src="/sounds/Birds_15.wav" type="audio/mpeg">
-  </audio>
+  <!-- <audio id="background-music-1" loop autoplay controls>
+    <source src="../sounds/Birds_15.wav" type="audio/wav">
+  </audio> -->
   <audio id="background-music-2" loop>
-    <source src="/sounds/AmissaEcho(Intense)_Master.wav" type="audio/mpeg">
+    <source src="../sounds/AmissaEcho 112 BPM_Master.wav" type="audio/wav">
   </audio>
 
 
@@ -51,6 +51,10 @@
   </div>
   <div id="game-container">
     <div id="deathCountDisplay">Deaths: 0</div>
+<<<<<<< HEAD
+=======
+    <div id="timerDisplay">Time: 0:00</div>
+>>>>>>> 2d0ec8bce5ce793017cbe08d856ee1fc1b55acf4
     <canvas></canvas>
     <div id="checkpoint-popup">Checkpoint Reached</div>
   </div>
@@ -73,6 +77,8 @@
 <script src="js/classes/Sprite.js"></script>
 <script src="js/classes/Camera.js"></script>
 <script src="js/classes/Player.js"></script>
+<script src="js/classes/Timer.js"></script>
+<script src="js/classes/Enemy.js"></script>
 <script src="js/eventListeners.js"></script>
 <script src="index.js"></script>
   </body>

@@ -119,7 +119,6 @@ body {
   /* background: rgba(255, 0, 0, 0.7); Red box with 50% opacity */
   padding: 50px;
   border-radius: 10px;
-  backdrop-filter: blur(10px); /* Hazy effect */
   width: 500px;
   display: flex;
   flex-direction: column;
@@ -180,9 +179,38 @@ body {
 
 #deathCountDisplay{
   position: absolute;
+<<<<<<< HEAD
   top: 700px;
   left:1482.5px;
   color: white;
   font-family: Arial, sans-serif;
   font-size: 14px;
 }
+=======
+  top: 0px;
+  left: 0px;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+#game-container {
+  opacity: 0;
+  transition: opacity 1s ease; /* Adjust the duration as needed */
+}
+
+.fade-in {
+  opacity: 1 !important;
+}
+
+#timerDisplay {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  left: 50%; 
+  transform: translateX(-50%);
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 24px; /* Adjust to your preference */
+  text-align: center;
+}
+>>>>>>> 2d0ec8bce5ce793017cbe08d856ee1fc1b55acf4

@@ -59,9 +59,14 @@ class Player extends Sprite {
     this.deathCount = 0; // Initialize death count
 
     // this.createDeathCounter(); // Create the death counter element
+<<<<<<< HEAD
 
     // this.displayDeathCount(); // Display the initial death count
 
+=======
+
+    // this.displayDeathCount(); // Display the initial death count
+>>>>>>> 2d0ec8bce5ce793017cbe08d856ee1fc1b55acf4
   }
 
 
@@ -290,8 +295,14 @@ handleDeath() {
       else this.switchSprite("jumpRight");
 
     }
+<<<<<<< HEAD
 
 
+=======
+    // if (keys.Spacebar.pressed && this.checkForFloorCollision()) {
+    //   jumpSound.play();
+    // }
+>>>>>>> 2d0ec8bce5ce793017cbe08d856ee1fc1b55acf4
 
     //Dash
 
