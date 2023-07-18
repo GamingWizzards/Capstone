@@ -3,7 +3,8 @@ const c = canvas.getContext('2d')
 const startButton = document.getElementById('start-button');
 const startContainer = document.getElementById('start-container');
 const gameContainer = document.getElementById('game-container');
-const backgroundAudio = document.getElementById('background-music-2')
+const backgroundAudio1 = document.getElementById('background-music-1')
+const backgroundAudio2 = document.getElementById('background-music-2')
 
 
 // const audioContext = new (window.AudioContext || window.AudioContext)();
@@ -239,6 +240,8 @@ let levels = {
       player.collisionBlocks = collisionBlocks
       player.position.x = 1662.79
       player.position.y = 2502.94
+      // backgroundAudio1.volume = 0.2
+      // backgroundAudio1.play()
 
       if (player.currentAnimation) player.currentAnimation.isActive = false
 
@@ -281,8 +284,9 @@ let levels = {
       player.collisionBlocks = collisionBlocks;
       player.position.x = 250;
       player.position.y = 3844;
-      // player.position.x = 250;
-      // player.position.y = 3844;
+      backgroundAudio2.play()
+      backgroundAudio2.volume = 0.1
+
       if (player.currentAnimation) player.currentAnimation.isActive = false;
            
 
@@ -661,34 +665,25 @@ function animate() {
   c.restore()
 }
 
-startButton.addEventListener('click', () => {
-  startContainer.style.opacity = '0'; // Fade out the start container
-  setTimeout(() => {
-    startContainer.style.display = 'none'; // Hide the start container
-    gameContainer.classList.add('fade-in'); // Fade in the game container
-    gameStarted = true;
-  
-    if (gameStarted === true) {
-      playBackground('background-music-2', 0.1);
-    }
-  }, 1000); // Adjust the delay (in milliseconds) to match the transition duration
 
-});
+
 
 let gameStarted = false
 
-// function setVolume(audioId, volume) {
-//   const audio = document.getElementById(audioId);
-//   audio.volume = volume;
-// }
 
-function playBackground(audioId, volume) {
-  const audio = document.getElementById(audioId);
-  audio.volume = volume
-  audio.play();
-}
+  levels[level].init()
 
+  startButton.addEventListener('click', () => {
+    startContainer.style.opacity = '0'; // Fade out the start container
+    setTimeout(() => {
+      startContainer.style.display = 'none'; // Hide the start container
+      gameContainer.classList.add('fade-in'); // Fade in the game container
+      
+    }, 1000); // Adjust the delay (in milliseconds) to match the transition duration
+    backgroundAudio1.volume = 0.2
+    backgroundAudio1.play()
 
+    gameStarted = true;
+  });
 
-levels[level].init()
 animate()
