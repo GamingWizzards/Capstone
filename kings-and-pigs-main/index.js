@@ -19,7 +19,7 @@ let collisionBlocks
 let background
 let doors
 let lethalBlocks
-let enemy;
+let enemy
 
 const player = new Player({
   imageSrc: './img/AssetPack/Light/idle_blink/idleRight.png',
@@ -233,6 +233,9 @@ const camera = new window.Camera(player, { width: canvas.width, height: canvas.h
 let level = 1;
 let levels = {
   1: {
+    hasEnemy: true,
+    enemy: new Enemy(2664.28, 2368.27, './img/Ninja/merchant/ninja merchant anim_Animation 1_09.png'),
+
     init: () => {
       parsedCollisions = collisionsLevel2.parse2D()
       collisionBlocks = parsedCollisions.createObjectsFrom2D()
@@ -267,14 +270,18 @@ let levels = {
       lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLevel2);
       player.lethalBlocks = lethalBlocks; 
 
-      if (!enemy) {
-        enemy = new Enemy(2664.28, 2368.27, './img/Ninja/merchant/ninja merchant anim_Animation 1_09.png')
-      }
+
+      // if (!enemy) {
+      //   enemy = new Enemy(2664.28, 2368.27, './img/Ninja/merchant/ninja merchant anim_Animation 1_09.png')
+      //   console.log("Enemy created: ", this.enemy);
+      // }
 
       
     },
   },
   2: {
+    hasEnemy: false,
+
     init: () => {
       parsedCollisions = collisionsLethalLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
@@ -345,9 +352,12 @@ let levels = {
       lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLethalLevel1);
       player.lethalBlocks = lethalBlocks; 
       //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
+
     },
   },
   3: {
+    hasEnemy: false,
+
     init: () => {
       parsedCollisions = collisionsLethalLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
@@ -420,6 +430,8 @@ let levels = {
     },
   },
   4: {
+    hasEnemy: false,
+
     init: () => {
       parsedCollisions = collisionsLethalLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
@@ -493,6 +505,8 @@ let levels = {
     },
   },
   5: {
+    hasEnemy: false,
+
     init: () => {
       parsedCollisions = collisionsLethalLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
@@ -638,8 +652,9 @@ function animate() {
   })
   
   
-  if (enemy) {
-    enemy.draw();
+  if (levels[level].hasEnemy) {
+    console.log("Drawing enemy");
+    levels[level].enemy.draw();
   }
   
   updateCheckpoints();
