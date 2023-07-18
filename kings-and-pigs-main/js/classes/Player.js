@@ -195,15 +195,15 @@ handleDeath() {
 
     // this is the blue box
 
-    //c.fillStyle = 'rgba(0, 0, 255, 0.5)'
+    // c.fillStyle = 'rgba(0, 0, 255, 0.5)'
 
-    //c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    // c.fillRect(this.position.x, this.position.y, this.width, this.height)
 
     // c.fillRect(
 
     // this.hitbox.position.x,
 
-    //this.hitbox.position.y,
+    // this.hitbox.position.y,
 
     // this.hitbox.width,
 
@@ -803,15 +803,15 @@ handleDeath() {
 
       position: {
 
-        x: this.position.x + 58,
+        x: this.position.x + 50,
 
-        y: this.position.y + 34,
+        y: this.position.y + 45,
 
       },
 
-      width: 50,
+      width: 35,
 
-      height: 53,
+      height: 54,
 
     };
 
