@@ -235,8 +235,8 @@ let levels = {
       player.collisionBlocks = collisionBlocks
       player.position.x = 1662.79
       player.position.y = 2502.94
-      backgroundAudio1.volume = 0.2
-      backgroundAudio1.play()
+      // backgroundAudio1.volume = 0.2
+      // backgroundAudio1.play()
 
       if (player.currentAnimation) player.currentAnimation.isActive = false
 
@@ -664,6 +664,8 @@ let gameStarted = false
       gameContainer.classList.add('fade-in'); // Fade in the game container
       
     }, 1000); // Adjust the delay (in milliseconds) to match the transition duration
+    backgroundAudio1.volume = 0.2
+    backgroundAudio1.play()
 
     gameStarted = true;
   });
