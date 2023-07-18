@@ -19,7 +19,7 @@ let collisionBlocks
 let background
 let doors
 let lethalBlocks
-let enemy;
+let enemy
 
 const player = new Player({
   imageSrc: './img/AssetPack/Light/idle_blink/idleRight.png',
@@ -139,7 +139,7 @@ const player = new Player({
           onComplete: () => {
             level++
 
-            if (level === 6) level = 1
+            if (level === 5) window.location.href = 'end.html'
             levels[level].init()
             player.switchSprite('idleRight')
             player.preventInput = false
@@ -306,6 +306,9 @@ let levels = {
   //   },
   // },
   1: {
+    hasEnemy: true,
+    enemy: new Enemy(2664.28, 2368.27, './img/Ninja/merchant/ninja merchant anim_Animation 1_09.png'),
+
     init: () => {
       parsedCollisions = collisionsLevel2.parse2D()
       collisionBlocks = parsedCollisions.createObjectsFrom2D()
@@ -320,7 +323,7 @@ let levels = {
           x: 0,
           y: 0,
         },
-        imageSrc: './img/AmissaTutorialMap.png',
+        imageSrc: './img/Maps/TutorialMap.png',
       })
   
 
@@ -340,14 +343,18 @@ let levels = {
       lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLevel2);
       player.lethalBlocks = lethalBlocks; 
 
-      if (!enemy) {
-        enemy = new Enemy(2664.28, 2368.27, './img/Ninja/merchant/ninja merchant anim_Animation 1_09.png')
-      }
+
+      // if (!enemy) {
+      //   enemy = new Enemy(2664.28, 2368.27, './img/Ninja/merchant/ninja merchant anim_Animation 1_09.png')
+      //   console.log("Enemy created: ", this.enemy);
+      // }
 
       
     },
   },
   2: {
+    hasEnemy: false,
+
     init: () => {
       parsedCollisions = collisionsLethalLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
@@ -364,7 +371,7 @@ let levels = {
           x: 0,
           y: 0,
         },
-        imageSrc: './img/AmissasEchoMap.png',
+        imageSrc: './img/Maps/Level1.png',
       });
       doors = [
         // new Sprite({
@@ -418,9 +425,12 @@ let levels = {
       lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLethalLevel1);
       player.lethalBlocks = lethalBlocks; 
       //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
+
     },
   },
   3: {
+    hasEnemy: false,
+
     init: () => {
       parsedCollisions = collisionsLethalLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
@@ -436,7 +446,7 @@ let levels = {
           x: 0,
           y: 0,
         },
-        imageSrc: './img/AmissasEchoMap.png',
+        imageSrc: './img/Maps/Level2.png',
       });
       doors = [
         // new Sprite({
@@ -493,6 +503,8 @@ let levels = {
     },
   },
   4: {
+    hasEnemy: false,
+
     init: () => {
       parsedCollisions = collisionsLethalLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
@@ -508,7 +520,7 @@ let levels = {
           x: 0,
           y: 0,
         },
-        imageSrc: './img/AmissasEchoMap.png',
+        imageSrc: './img/Maps/Level3.png',
       });
 
       doors = [
@@ -565,79 +577,81 @@ let levels = {
       //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
     },
   },
-  5: {
-    init: () => {
-      parsedCollisions = collisionsLethalLevel1.parse2D();
-      collisionBlocks = parsedCollisions.createObjectsFrom2D();
-      player.collisionBlocks = collisionBlocks;
-      player.position.x = 250;
-      player.position.y = 3844;
-      // player.position.x = 250;
-      // player.position.y = 3844;
-      if (player.currentAnimation) player.currentAnimation.isActive = false;
+  // 5: {
+  //   hasEnemy: false,
 
-      background = new Sprite({
-        position: {
-          x: 0,
-          y: 0,
-        },
-        imageSrc: './img/AmissasEchoMap.png',
-      });
+  //   init: () => {
+  //     parsedCollisions = collisionsLethalLevel1.parse2D();
+  //     collisionBlocks = parsedCollisions.createObjectsFrom2D();
+  //     player.collisionBlocks = collisionBlocks;
+  //     player.position.x = 250;
+  //     player.position.y = 3844;
+  //     // player.position.x = 250;
+  //     // player.position.y = 3844;
+  //     if (player.currentAnimation) player.currentAnimation.isActive = false;
 
-      doors = [
-        // new Sprite({
-        //   position: {
-        //     x: 165,
-        //     y: 3760,
-        //   },
-        //   imageSrc: './img/teleporter.png',
-        //   frameRate: 12,
-        //   frameBuffer: 20,
-        //   loop: true,
-        //   autoplay: false,
-        // }),
-        //orange
-        new Sprite({
-          position: {
-            x: 5200,
-            y: 1308,
-          },
-          imageSrc: './img/teleporter.png',
-          frameRate: 12,
-          frameBuffer: 20,
-          loop: true,
-          autoplay: false,
-        }),
-        //purple
-        new Sprite({
-          position: {
-            x: 250,
-            y: 800,
-          },
-          imageSrc: './img/teleporter.png',
-          frameRate: 12,
-          frameBuffer: 20,
-          loop: true,
-          autoplay: false,
-        }),
-        //green
-        new Sprite({
-          position: {
-            x: 7200,
-            y: 2705,
-          },
-          imageSrc: './img/teleporter.png',
-          frameRate: 12,
-          frameBuffer: 20,
-          loop: true,
-          autoplay: false,
-        }),
-      ];
-      lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLethalLevel1);
-      player.lethalBlocks = lethalBlocks; 
-      //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
-    },
-  },
+  //     background = new Sprite({
+  //       position: {
+  //         x: 0,
+  //         y: 0,
+  //       },
+  //       imageSrc: './img/AmissasEchoMap.png',
+  //     });
+
+  //     doors = [
+  //       // new Sprite({
+  //       //   position: {
+  //       //     x: 165,
+  //       //     y: 3760,
+  //       //   },
+  //       //   imageSrc: './img/teleporter.png',
+  //       //   frameRate: 12,
+  //       //   frameBuffer: 20,
+  //       //   loop: true,
+  //       //   autoplay: false,
+  //       // }),
+  //       //orange
+  //       new Sprite({
+  //         position: {
+  //           x: 5200,
+  //           y: 1308,
+  //         },
+  //         imageSrc: './img/teleporter.png',
+  //         frameRate: 12,
+  //         frameBuffer: 20,
+  //         loop: true,
+  //         autoplay: false,
+  //       }),
+  //       //purple
+  //       new Sprite({
+  //         position: {
+  //           x: 250,
+  //           y: 800,
+  //         },
+  //         imageSrc: './img/teleporter.png',
+  //         frameRate: 12,
+  //         frameBuffer: 20,
+  //         loop: true,
+  //         autoplay: false,
+  //       }),
+  //       //green
+  //       new Sprite({
+  //         position: {
+  //           x: 7200,
+  //           y: 2705,
+  //         },
+  //         imageSrc: './img/teleporter.png',
+  //         frameRate: 12,
+  //         frameBuffer: 20,
+  //         loop: true,
+  //         autoplay: false,
+  //       }),
+  //     ];
+  //     lethalBlocks = parsedCollisions.createObjectsFrom2D(collisionsLethalLevel1);
+  //     player.lethalBlocks = lethalBlocks; 
+  //     //need two doors(technically 3;boss level) 1 to lead right and 1 to lead left
+  //   },
+  // },
 
 
 
@@ -711,8 +725,9 @@ function animate() {
   })
   
   
-  if (enemy) {
-    enemy.draw();
+  if (levels[level].hasEnemy) {
+    console.log("Drawing enemy");
+    levels[level].enemy.draw();
   }
   
   updateCheckpoints();
