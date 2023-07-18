@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>End Credits</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+
+    #end-credits {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 48px;
+      text-align: center;
+      white-space: nowrap;
+    }
+    #redirect-button {
+      display: block;
+      margin: 20px auto;
+      padding: 15px 30px;
+      font-size: 24px;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    function scrollCredits() {
+      const creditsElement = document.getElementById('end-credits');
+      let position = window.innerHeight;
+  
+      function animateCredits() {
+        position -= 1; // Adjust the scrolling speed (smaller values make it slower)
+        creditsElement.style.top = position + 'px';
+  
+        if (position <= -creditsElement.offsetHeight) {
+          position = window.innerHeight;
+        }
+  
+        requestAnimationFrame(animateCredits);
+      }
+  
+      animateCredits();
+    }
+  
+    // Start scrolling the credits when the page is fully loaded
+    window.addEventListener('load', scrollCredits);
+  </script>
+</head>
+<body>
+  <div id="end-credits">
+    <p>Thanks for Playing Amissa's Echo!</p>
+    <p>We had a great time making this game in less than 3 weeks!!!</p>
+    <p>This was the first time any of us have made a game.</p>
+    <p>Developed by:</p>
+    <p>Matthew Massey</p>
+    <p>Ricardo Colon</p>
+    <p>Joseph Rodriguez</p>
+    <p>Steven Kelly</p>
+    <p>Kelvin Benitez</p>
+    <p>Music by: Cameron Bryant</p>
+    
+    
+    <p>Coded Using Only JavaScript</p>
+    <p>It was a challenge creating this game from scratch only using Javascipt, </p>
+    <p> without the help of any other game builder engines. </p>
+    <p>I hope you enjoyed playing our game!</p>
+    <p>Please let us know if you have any feedback, </p>
+    <p>or potentially want us to work on future games!</p>
+
+  </div>
+  <button id="redirect-button">Click here to continue</button>
+  <script>
+    document.getElementById('redirect-button').addEventListener('click', function() {
+      window.location.href = 'index.html';
+    });
+  </script>
+  
+</body>
+</html>
