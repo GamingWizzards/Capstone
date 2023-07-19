@@ -234,7 +234,7 @@ let level = 1;
 let levels = {
   1: {
     hasEnemy: true,
-    enemy: new Enemy(2664.28, 2368.27, './img/Ninja/merchant/ninja merchant anim_Animation 1_09.png'),
+    enemy: new Enemy(2664.28, 2368.27, './img/Ninja/merchant/BigFrog.png'),
 
     init: () => {
       parsedCollisions = collisionsLevel2.parse2D()
@@ -651,11 +651,14 @@ function animate() {
     door.draw()
   })
   
+  if (enemy) {
+    enemy.update(player);
+}
   
-  if (levels[level].hasEnemy) {
-    console.log("Drawing enemy");
-    levels[level].enemy.draw();
-  }
+if (levels[level].hasEnemy) {
+  levels[level].enemy.update(player);
+  levels[level].enemy.draw();
+}
   
   updateCheckpoints();
 
