@@ -169,13 +169,13 @@ function GameCheckpoint(x, y, imageSrc) {
 }
 
 let checkpoints = [
-  new GameCheckpoint(498, 3880, './img/Lantern.png'), //spawn
+  new GameCheckpoint(490, 3860, './img/Lantern.png'), //spawn
   
 
-  new GameCheckpoint(2688, 3560, './img/Lantern.png'), //start green
-  new GameCheckpoint(5060, 3780, './img/Lantern.png'), //green 1
-  new GameCheckpoint(5244, 4400, './img/Lantern.png'), //green 2
-  new GameCheckpoint(5696, 2700, './img/Lantern.png') ,//green 3
+  new GameCheckpoint(2680, 3530, './img/Lantern.png'), //start green
+  new GameCheckpoint(5000, 3740, './img/Lantern.png'), //green 1
+  new GameCheckpoint(5130, 4350, './img/Lantern.png'), //green 2
+  new GameCheckpoint(5680, 2650, './img/Lantern.png') ,//green 3
 
   new GameCheckpoint(1064, 2910, './img/Lantern.png'), //start purple 
   new GameCheckpoint(450, 2325, './img/Lantern.png'), //purple 1
